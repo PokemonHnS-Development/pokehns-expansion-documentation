@@ -1,0 +1,410 @@
+/* Pokemon Heart & Soul documentation - shared styles */
+
+:root {
+  color-scheme: light dark;
+
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-2: #f0f2f5;
+  --border: #dfe3e8;
+  --text: #14171a;
+  --text-dim: #5b6572;
+  --accent: #b3261e;
+  --accent-soft: #f5e0de;
+  --shadow: 0 1px 2px rgba(16, 20, 26, .06), 0 1px 3px rgba(16, 20, 26, .04);
+  --radius: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101317;
+    --surface: #171b21;
+    --surface-2: #1e242c;
+    --border: #2b323c;
+    --text: #e7eaee;
+    --text-dim: #97a1ae;
+    --accent: #ff6b5e;
+    --accent-soft: #35211f;
+    --shadow: none;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+a { color: var(--accent); }
+
+/* ---------- header + nav ---------- */
+
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 16px 0;
+}
+
+.site-title {
+  margin: 0 0 2px;
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: -.01em;
+}
+
+.site-title a { color: inherit; text-decoration: none; }
+
+.site-sub {
+  margin: 0 0 10px;
+  color: var(--text-dim);
+  font-size: 12.5px;
+}
+
+.nav {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: 0 -16px;
+  padding: 0 16px;
+}
+.nav::-webkit-scrollbar { display: none; }
+
+.nav a {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border-radius: 8px 8px 0 0;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 13.5px;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+.nav a:hover { color: var(--text); background: var(--surface-2); }
+.nav a[aria-current="page"] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+/* ---------- search ---------- */
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+}
+
+.search-wrap { position: relative; max-width: 1180px; margin: 0 auto; }
+
+#search {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px; /* 16px stops iOS zooming on focus */
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+#search:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+.result-count {
+  margin: 8px auto 0;
+  max-width: 1180px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+
+/* ---------- layout ---------- */
+
+main { max-width: 1180px; margin: 0 auto; padding: 16px 16px 64px; }
+
+.empty {
+  display: none;
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--text-dim);
+}
+.empty.show { display: block; }
+
+/* ---------- location cards ---------- */
+
+.loc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.loc.hidden { display: none; }
+
+.loc > h2 {
+  margin: 0;
+  padding: 12px 14px;
+  font-size: 15.5px;
+  font-weight: 650;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.time-block { padding: 12px 14px; }
+.time-block + .time-block { border-top: 1px solid var(--border); }
+
+.time-label {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 11.5px;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.methods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+}
+
+.method h3 {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--text-dim);
+}
+
+.method ul { margin: 0; padding: 0; list-style: none; }
+
+.method li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 10px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+}
+.method li:last-child { border-bottom: 0; }
+
+.mon { font-weight: 550; }
+.pct { color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.lv {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+mark {
+  background: var(--accent-soft);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 2px;
+}
+
+.page-intro {
+  margin: 0 0 14px;
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+/* ---------- prose pages ---------- */
+
+.prose { background: var(--surface); border: 1px solid var(--border);
+         border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+.prose h2 { margin-top: 0; font-size: 16px; }
+.prose p { margin: 0 0 12px; }
+
+footer {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  main { padding: 12px 10px 56px; }
+  .toolbar { padding: 8px 10px; }
+  .site-header { padding: 12px 12px 0; }
+  .nav { margin: 0 -12px; padding: 0 12px; }
+  .methods { grid-template-columns: 1fr; gap: 12px; }
+}
+
+/* ---------- generic data card ---------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.card.hidden { display: none; }
+
+.card > h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  padding: 11px 14px;
+  font-size: 15px;
+  font-weight: 650;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.card-num {
+  color: var(--text-dim);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 550;
+}
+
+.card-body { padding: 12px 14px; }
+
+.card-note {
+  margin: 0 0 10px;
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+/* ---------- badges ---------- */
+
+.badges { display: flex; flex-wrap: wrap; gap: 5px; margin-left: auto; }
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.badge.strong { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+
+/* ---------- stat strip ---------- */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.stat {
+  background: var(--surface-2);
+  border-radius: 7px;
+  padding: 6px 4px;
+  text-align: center;
+}
+.stat b { display: block; font-size: 14px; font-variant-numeric: tabular-nums; }
+.stat span {
+  display: block;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: var(--text-dim);
+}
+
+/* ---------- key/value grid ---------- */
+
+.kv {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 6px 16px;
+  margin: 0;
+  font-size: 13px;
+}
+.kv > div { display: flex; gap: 6px; border-bottom: 1px solid var(--border); padding: 3px 0; }
+.kv dt { flex: 0 0 auto; color: var(--text-dim); }
+.kv dd { margin: 0; text-align: right; margin-left: auto; }
+
+/* ---------- inline lists (moves, locations) ---------- */
+
+.block { margin-bottom: 12px; }
+.block:last-child { margin-bottom: 0; }
+
+.block h3 {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--text-dim);
+}
+
+.inline-list { margin: 0; font-size: 13.5px; line-height: 1.65; }
+.inline-list .lvl { color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.inline-list .sep { color: var(--border); padding: 0 3px; }
+
+.stack { margin: 0; padding: 0; list-style: none; font-size: 13.5px; }
+.stack li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+}
+.stack li:last-child { border-bottom: 0; }
+.stack .where { font-weight: 550; }
+.stack .how { color: var(--text-dim); font-size: 12.5px; }
+
+/* ---------- group headings ---------- */
+
+.group-heading {
+  margin: 26px 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-dim);
+}
+.group-heading:first-child { margin-top: 4px; }
+
+/* ---------- party (trainers) ---------- */
+
+.party {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+.mon-card { background: var(--surface-2); border-radius: 8px; padding: 9px 10px; }
+.mon-card h4 { margin: 0 0 2px; font-size: 13.5px; }
+.mon-card .meta { color: var(--text-dim); font-size: 12px; margin-bottom: 5px; }
+.mon-card ul { margin: 0; padding-left: 15px; font-size: 12.5px; }
+
+/* ---------- prose tables ---------- */
+
+.prose table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.prose th, .prose td {
+  text-align: left;
+  vertical-align: top;
+  padding: 7px 10px 7px 0;
+  border-bottom: 1px solid var(--border);
+}
+.prose th { color: var(--text-dim); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+.table-scroll { overflow-x: auto; }
+
+@media (max-width: 640px) {
+  .stats { grid-template-columns: repeat(4, 1fr); }
+  .kv { grid-template-columns: 1fr; }
+  .party { grid-template-columns: 1fr; }
+  .badges { margin-left: 0; width: 100%; }
+}

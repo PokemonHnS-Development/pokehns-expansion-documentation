@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Breeding - Pokemon Heart &amp; Soul</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-noun="rule">
+<header class="site-header">
+  <h1 class="site-title"><a href="index.html">Pokemon Heart &amp; Soul</a></h1>
+  <p class="site-sub">Player documentation</p>
+  <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="encounters.html">Wild Encounters</a>
+      <a href="species.html">Species</a>
+      <a href="learnsets.html">Learnsets</a>
+      <a href="evolutions.html">Evolutions</a>
+      <a href="items.html">Items &amp; TMs</a>
+      <a href="trainers.html">Trainers</a>
+      <a href="moves.html">Moves</a>
+      <a href="breeding.html" aria-current="page">Breeding</a>
+      <a href="completion.html">Completion</a>
+      <a href="faq.html">FAQ</a>
+      <a href="credits.html">Credits</a>
+  </nav>
+</header>
+<div class="toolbar">
+  <div class="search-wrap">
+    <input id="search" type="search" autocomplete="off" spellcheck="false"
+           placeholder="Search a route or a Pokemon..." aria-label="Search">
+  </div>
+  <p class="result-count" id="result-count"></p>
+</div>
+<main>
+  <p class="page-intro">Taken from the build's own configuration, so these are the rules the game actually applies.</p>
+  <div class="prose">
+    <h2>How breeding works in this build</h2>
+    <ul class="stack">
+      <li><span class="where">P_INCENSE_BREEDING</span><span class="how">Baby Pokemon (Wynaut, Azurill, Budew, Chingling, Bonsly, Mime Jr., Happiny, Munchlax, Mantyke) breed normally - no Incense needed.</span></li>
+      <li><span class="where">P_EGG_HATCH_LEVEL</span><span class="how">Eggs hatch at level 1.</span></li>
+      <li><span class="where">P_NIDORAN_M_DITTO_BREED</span><span class="how">Nidoran-M and Volbeat bred with Ditto can produce female offspring (Nidoran-F / Illumise).</span></li>
+      <li><span class="where">P_BALL_INHERITING</span><span class="how">The egg inherits a parent&#x27;s Poke Ball; the father can pass it down too, as long as he&#x27;s the same species as the mother.</span></li>
+      <li><span class="where">P_TM_INHERITANCE</span><span class="how">Fathers do not pass down TM moves.</span></li>
+      <li><span class="where">P_MOTHER_EGG_MOVE_INHERITANCE</span><span class="how">Either parent can pass down Egg Moves.</span></li>
+      <li><span class="where">P_NATURE_INHERITANCE</span><span class="how">A parent holding an Everstone always passes down its Nature.</span></li>
+      <li><span class="where">P_ABILITY_INHERITANCE</span><span class="how">80% chance to pass down a regular Ability, 60% for a Hidden Ability. Either parent can pass it, including when bred with Ditto.</span></li>
+      <li><span class="where">P_EGG_MOVE_TRANSFER</span><span class="how">A Pokemon holding a Mirror Herb in the Day Care learns Egg Moves from the other Pokemon, regardless of species.</span></li>
+      <li><span class="where">P_EGG_CYCLE_LENGTH</span><span class="how">Egg cycles use the original (longer) step counts.</span></li>
+      <li><span class="where">P_UPDATED_EGG_GROUPS</span><span class="how">Gen 8&#x27;s egg group additions are applied.</span></li>
+      <li><span class="where">P_SCATTERBUG_LINE_FORM_BREED</span><span class="how">The Scatterbug/Spewpa/Vivillon line always breeds into the Fancy pattern.</span></li>
+    </ul>
+  </div>
+  <p class="empty" id="empty">Nothing matches that search.</p>
+</main>
+<footer>Generated from the game's own data. Percentages and levels are exactly what the ROM uses.</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>
