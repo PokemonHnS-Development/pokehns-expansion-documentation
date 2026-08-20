@@ -46,15 +46,15 @@ document.addEventListener('click', function (e) {
   var count = document.getElementById('result-count');
   var empty = document.getElementById('empty');
   var noun = document.body.dataset.noun || 'result';
+  var nounPlural = document.body.dataset.nounPlural || (noun + 's');
   var payload = document.getElementById('cards');
   var timer = null;
 
   function label(shown, total, filtered) {
     if (!count) return;
-    var plural = noun + (shown === 1 ? '' : 's');
     count.textContent = filtered
-      ? shown + ' of ' + total + ' ' + plural + ' match'
-      : total + ' ' + plural;
+      ? shown + ' of ' + total + ' ' + (shown === 1 ? noun : nounPlural) + ' match'
+      : total + ' ' + (total === 1 ? noun : nounPlural);
   }
 
   function rememberQuery(value) {
