@@ -65,8 +65,13 @@ document.addEventListener('click', function (e) {
   }
 
   function words() {
+    // Punctuation is stripped so "ho-oh" and "farfetch'd" match the index,
+    // which stores those names joined as well as split.
     var q = input ? input.value.toLowerCase().trim() : '';
-    return q ? q.split(/\s+/) : [];
+    if (!q) return [];
+    return q.split(/\s+/)
+            .map(function (w) { return w.replace(/[^a-z0-9]/g, ''); })
+            .filter(function (w) { return w.length; });
   }
 
   // ---- windowed mode -------------------------------------------------------
