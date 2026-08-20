@@ -543,9 +543,15 @@ footer {
 
 .party {
   display: grid;
-  /* a full team of six has to sit on one row at the page's full width */
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  /* Fixed six slots rather than auto-fit: a smaller party leaves the remaining
+     slots empty instead of stretching, so team sizes are comparable down the
+     page at a glance. */
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 12px;
+}
+
+@media (max-width: 1200px) {
+  .party { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 .mon-card { background: var(--surface-2); border-radius: 8px; padding: 9px 10px; }
 .mon-head { display: flex; align-items: center; gap: 4px; margin-bottom: 2px; }
@@ -569,7 +575,7 @@ footer {
 @media (max-width: 640px) {
   .stats { grid-template-columns: repeat(4, 1fr); }
   .kv { grid-template-columns: 1fr; }
-  .party { grid-template-columns: 1fr; }
+  .party { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .badges { margin-left: 0; width: 100%; }
 }
 
