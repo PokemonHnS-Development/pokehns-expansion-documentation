@@ -534,7 +534,8 @@ footer {
 
 .party {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  /* a full team of six has to sit on one row at the page's full width */
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 12px;
 }
 .mon-card { background: var(--surface-2); border-radius: 8px; padding: 9px 10px; }
