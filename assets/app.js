@@ -4,20 +4,41 @@
 // Big pages (species, learnsets) would need >100k DOM elements if rendered that
 // way, which is painfully slow on a phone, so they ship their cards as strings
 // in a JSON payload and only the ones on screen are built.
-// Tab switching inside Pokedex cards. Delegated from the document so it works
-// for cards the windowed renderer adds later.
-document.addEventListener('click', function (e) {
-  var tab = e.target.closest && e.target.closest('.tab');
-  if (!tab) return;
-  var card = tab.closest('.card');
-  if (!card) return;
-  var wanted = tab.dataset.panel;
+// Pokedex cards have two independent selections: which tab is open, and which
+// alternate form is being shown. Both are held on the card as data attributes
+// and applied together, so switching form keeps you on the tab you were reading.
+// Delegated from the document so it also works for cards the windowed renderer
+// adds later.
+function hnsSyncCard(card) {
+  var form = card.dataset.form || '0';
+  var panel = card.dataset.panel || 'stats';
+
+  card.querySelectorAll('.formswap').forEach(function (el) {
+    el.hidden = el.dataset.form !== form;
+  });
+  card.querySelectorAll('.formpill').forEach(function (b) {
+    b.setAttribute('aria-pressed', String(b.dataset.form === form));
+  });
   card.querySelectorAll('.tab').forEach(function (t) {
-    t.setAttribute('aria-selected', String(t === tab));
+    t.setAttribute('aria-selected', String(t.dataset.panel === panel));
   });
   card.querySelectorAll('.panel').forEach(function (p) {
-    p.hidden = p.dataset.panel !== wanted;
+    // "any" panels (the Forms list) are the same whichever form is selected
+    var formOk = p.dataset.form === form || p.dataset.form === 'any';
+    p.hidden = !(formOk && p.dataset.panel === panel);
   });
+}
+
+document.addEventListener('click', function (e) {
+  if (!e.target.closest) return;
+  var tab = e.target.closest('.tab');
+  var pill = e.target.closest('.formpill');
+  if (!tab && !pill) return;
+  var card = (tab || pill).closest('.card');
+  if (!card) return;
+  if (tab) card.dataset.panel = tab.dataset.panel;
+  if (pill) card.dataset.form = pill.dataset.form;
+  hnsSyncCard(card);
 });
 
 (function () {
