@@ -453,6 +453,40 @@ footer {
 .stack .how { color: var(--text-dim); font-size: 12.5px; }
 .stack .where + .how { flex-basis: 100%; padding-left: 12px; }
 
+/* ---------- species lists ----------
+   Vertical lists that wrap into columns, so 70 species stay readable rather
+   than becoming one very long strip. */
+
+.monlist {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.monlist li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+}
+
+.monlist img {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+@media (max-width: 640px) {
+  .monlist { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* ---------- group headings ---------- */
 
 .group-heading {
