@@ -4,6 +4,22 @@
 // Big pages (species, learnsets) would need >100k DOM elements if rendered that
 // way, which is painfully slow on a phone, so they ship their cards as strings
 // in a JSON payload and only the ones on screen are built.
+// Tab switching inside Pokedex cards. Delegated from the document so it works
+// for cards the windowed renderer adds later.
+document.addEventListener('click', function (e) {
+  var tab = e.target.closest && e.target.closest('.tab');
+  if (!tab) return;
+  var card = tab.closest('.card');
+  if (!card) return;
+  var wanted = tab.dataset.panel;
+  card.querySelectorAll('.tab').forEach(function (t) {
+    t.setAttribute('aria-selected', String(t === tab));
+  });
+  card.querySelectorAll('.panel').forEach(function (p) {
+    p.hidden = p.dataset.panel !== wanted;
+  });
+});
+
 (function () {
   var input = document.getElementById('search');
   var count = document.getElementById('result-count');
