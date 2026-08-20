@@ -331,6 +331,22 @@ footer {
   font-size: 13px;
 }
 
+/* ---------- move name highlight ----------
+   Tinted with its own type's colour, from assets/type-colors.css. Alpha rather
+   than a fixed colour so it works in both themes and the text stays readable. */
+
+.mv {
+  border-radius: 4px;
+  padding: 0 4px;
+  background: rgba(var(--type, 128, 128, 128), .45);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+@media (prefers-color-scheme: dark) {
+  .mv { background: rgba(var(--type, 128, 128, 128), .55); }
+}
+
 /* ---------- type plates ---------- */
 
 .typeicon {
