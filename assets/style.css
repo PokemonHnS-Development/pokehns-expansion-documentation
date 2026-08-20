@@ -225,6 +225,34 @@ mark {
   font-size: 13px;
 }
 
+/* ---------- work in progress banner ---------- */
+
+.wip {
+  margin: 0 0 18px;
+  padding: 22px 20px;
+  border: 2px dashed var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  text-align: center;
+}
+
+.wip h2 {
+  margin: 0 0 8px;
+  font-size: clamp(24px, 6vw, 40px);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.wip p {
+  margin: 0 auto;
+  max-width: 52ch;
+  font-size: 14px;
+  color: var(--text);
+}
+
 /* ---------- prose pages ---------- */
 
 .prose { background: var(--surface); border: 1px solid var(--border);
