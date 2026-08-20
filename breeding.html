@@ -34,24 +34,111 @@
   <p class="result-count" id="result-count"></p>
 </div>
 <main>
-  <p class="page-intro">Taken from the build's own configuration, so these are the rules the game actually applies.</p>
-  <div class="prose">
-    <h2>How breeding works in this build</h2>
-    <ul class="stack">
-      <li><span class="where">P_INCENSE_BREEDING</span><span class="how">Baby Pokemon (Wynaut, Azurill, Budew, Chingling, Bonsly, Mime Jr., Happiny, Munchlax, Mantyke) breed normally - no Incense needed.</span></li>
-      <li><span class="where">P_EGG_HATCH_LEVEL</span><span class="how">Eggs hatch at level 1.</span></li>
-      <li><span class="where">P_NIDORAN_M_DITTO_BREED</span><span class="how">Nidoran-M and Volbeat bred with Ditto can produce female offspring (Nidoran-F / Illumise).</span></li>
-      <li><span class="where">P_BALL_INHERITING</span><span class="how">The egg inherits a parent&#x27;s Poke Ball; the father can pass it down too, as long as he&#x27;s the same species as the mother.</span></li>
-      <li><span class="where">P_TM_INHERITANCE</span><span class="how">Fathers do not pass down TM moves.</span></li>
-      <li><span class="where">P_MOTHER_EGG_MOVE_INHERITANCE</span><span class="how">Either parent can pass down Egg Moves.</span></li>
-      <li><span class="where">P_NATURE_INHERITANCE</span><span class="how">A parent holding an Everstone always passes down its Nature.</span></li>
-      <li><span class="where">P_ABILITY_INHERITANCE</span><span class="how">80% chance to pass down a regular Ability, 60% for a Hidden Ability. Either parent can pass it, including when bred with Ditto.</span></li>
-      <li><span class="where">P_EGG_MOVE_TRANSFER</span><span class="how">A Pokemon holding a Mirror Herb in the Day Care learns Egg Moves from the other Pokemon, regardless of species.</span></li>
-      <li><span class="where">P_EGG_CYCLE_LENGTH</span><span class="how">Egg cycles use the original (longer) step counts.</span></li>
-      <li><span class="where">P_UPDATED_EGG_GROUPS</span><span class="how">Gen 8&#x27;s egg group additions are applied.</span></li>
-      <li><span class="where">P_SCATTERBUG_LINE_FORM_BREED</span><span class="how">The Scatterbug/Spewpa/Vivillon line always breeds into the Fancy pattern.</span></li>
-    </ul>
-  </div>
+  <p class="page-intro">How breeding behaves in this game. Read straight from the build's settings, so it matches what actually happens rather than what other Pok&eacute;mon games do.</p>
+  <h2 class="group-heading">Getting an egg</h2>
+  <p class="page-intro">Leave two compatible Pok&eacute;mon at the Day Care on Route 34 and they may produce an egg.</p>
+  <section class="card" data-search="baby pokemon wynaut azurill budew chingling bonsly mime jr happiny munchlax mantyke breed normally no incense needed getting an egg p breeding">
+    <h2>Baby Pokemon</h2>
+    <div class="card-body">
+    <p class="card-note big">Baby Pokemon (Wynaut, Azurill, Budew, Chingling, Bonsly, Mime Jr., Happiny, Munchlax, Mantyke) breed normally - no Incense needed.</p>
+    <p class="setting-note">Setting: <code>P_INCENSE_BREEDING</code> = GEN_LATEST (Gen 9)</p>
+    </div>
+  </section>
+  <section class="card" data-search="nidoran and volbeat with ditto m bred can produce female offspring f illumise getting an egg p breed">
+    <h2>Nidoran and Volbeat with Ditto</h2>
+    <div class="card-body">
+    <p class="card-note big">Nidoran-M and Volbeat bred with Ditto can produce female offspring (Nidoran-F / Illumise).</p>
+    <p class="setting-note">Setting: <code>P_NIDORAN_M_DITTO_BREED</code> = GEN_LATEST (Gen 9)</p>
+    </div>
+  </section>
+  <section class="card" data-search="teaching egg moves in the day care a pokemon holding mirror herb learns from other regardless of species getting an p move transfer">
+    <h2>Teaching egg moves in the Day Care</h2>
+    <div class="card-body">
+    <p class="card-note big">A Pokemon holding a Mirror Herb in the Day Care learns Egg Moves from the other Pokemon, regardless of species.</p>
+    <p class="setting-note">Setting: <code>P_EGG_MOVE_TRANSFER</code> = GEN_LATEST (Gen 9)</p>
+    </div>
+  </section>
+  <section class="card" data-search="egg groups gen 8&#x27;s group additions are applied getting an p updated">
+    <h2>Egg groups</h2>
+    <div class="card-body">
+    <p class="card-note big">Gen 8&#x27;s egg group additions are applied.</p>
+    <p class="setting-note">Setting: <code>P_UPDATED_EGG_GROUPS</code> = GEN_LATEST (Gen 9)</p>
+    </div>
+  </section>
+  <section class="card" data-search="vivillon patterns the scatterbug spewpa and line always breeds into fancy pattern getting an egg p form breed">
+    <h2>Vivillon patterns</h2>
+    <div class="card-body">
+    <p class="card-note big">The Scatterbug, Spewpa and Vivillon line always breeds into the Fancy pattern.</p>
+    <p class="setting-note">Setting: <code>P_SCATTERBUG_LINE_FORM_BREED</code> = SPECIES_SCATTERBUG_FANCY</p>
+    </div>
+  </section>
+  <h2 class="group-heading">What the baby inherits</h2>
+  <p class="page-intro">What the hatchling gets from its parents, and how to influence it.</p>
+  <section class="card" data-search="poke ball the egg inherits a parent&#x27;s father can pass it down too as long he&#x27;s same species mother what baby p inheriting">
+    <h2>Poke Ball</h2>
+    <div class="card-body">
+    <p class="card-note big">The egg inherits a parent&#x27;s Poke Ball; the father can pass it down too, as long as he&#x27;s the same species as the mother.</p>
+    <p class="setting-note">Setting: <code>P_BALL_INHERITING</code> = GEN_LATEST (Gen 9)</p>
+    </div>
+  </section>
+  <section class="card" data-search="tm moves fathers do not pass down what the baby inherits p inheritance">
+    <h2>TM moves</h2>
+    <div class="card-body">
+    <p class="card-note big">Fathers do not pass down TM moves.</p>
+    <p class="setting-note">Setting: <code>P_TM_INHERITANCE</code> = GEN_LATEST (Gen 9)</p>
+    </div>
+  </section>
+  <section class="card" data-search="egg moves either parent can pass down what the baby inherits p mother move inheritance">
+    <h2>Egg moves</h2>
+    <div class="card-body">
+    <p class="card-note big">Either parent can pass down Egg Moves.</p>
+    <p class="setting-note">Setting: <code>P_MOTHER_EGG_MOVE_INHERITANCE</code> = GEN_LATEST (Gen 9)</p>
+    </div>
+  </section>
+  <section class="card" data-search="nature a parent holding an everstone always passes down its what the baby inherits p inheritance">
+    <h2>Nature</h2>
+    <div class="card-body">
+    <p class="card-note big">A parent holding an Everstone always passes down its Nature.</p>
+    <p class="setting-note">Setting: <code>P_NATURE_INHERITANCE</code> = GEN_LATEST (Gen 9)</p>
+    </div>
+  </section>
+  <section class="card" data-search="ability 80 chance to pass down a regular 60 for hidden either parent can it including when bred with ditto what the baby inherits p inheritance">
+    <h2>Ability</h2>
+    <div class="card-body">
+    <p class="card-note big">80% chance to pass down a regular Ability, 60% for a Hidden Ability. Either parent can pass it, including when bred with Ditto.</p>
+    <p class="setting-note">Setting: <code>P_ABILITY_INHERITANCE</code> = GEN_LATEST (Gen 9)</p>
+    </div>
+  </section>
+  <section class="card" data-search="ivs 3 of the baby&#x27;s six are inherited at random from its parents rest a parent holding destiny knot raises that to 5 what baby inherits src daycare c">
+    <h2>IVs</h2>
+    <div class="card-body">
+    <p class="card-note big">3 of the baby&#x27;s six IVs are inherited at random from its parents; the rest are random. A parent holding a Destiny Knot raises that to 5.</p>
+    <p class="setting-note">Setting: <code>src/daycare.c</code> = InheritIVs</p>
+    </div>
+  </section>
+  <section class="card" data-search="power items a parent holding item weight bracer and so on always passes down that item&#x27;s iv using up one of the inherited slots both parents means them is picked at random what baby inherits src daycare c">
+    <h2>Power items</h2>
+    <div class="card-body">
+    <p class="card-note big">A parent holding a Power item (Power Weight, Power Bracer and so on) always passes down that item&#x27;s IV, using up one of the inherited slots. Both parents holding one means one of them is picked at random.</p>
+    <p class="setting-note">Setting: <code>src/daycare.c</code> = HOLD_EFFECT_POWER_ITEM</p>
+    </div>
+  </section>
+  <h2 class="group-heading">Hatching</h2>
+  <p class="page-intro">Eggs hatch as you walk. Nothing else is needed.</p>
+  <section class="card" data-search="what level they hatch at eggs 1 hatching p egg">
+    <h2>What level they hatch at</h2>
+    <div class="card-body">
+    <p class="card-note big">Eggs hatch at level 1.</p>
+    <p class="setting-note">Setting: <code>P_EGG_HATCH_LEVEL</code> = GEN_LATEST (Gen 9)</p>
+    </div>
+  </section>
+  <section class="card" data-search="how long an egg takes cycles use the original longer step counts hatching p cycle length">
+    <h2>How long an egg takes</h2>
+    <div class="card-body">
+    <p class="card-note big">Egg cycles use the original (longer) step counts.</p>
+    <p class="setting-note">Setting: <code>P_EGG_CYCLE_LENGTH</code> = GEN_3 (Gen 3)</p>
+    </div>
+  </section>
   <p class="empty" id="empty">Nothing matches that search.</p>
 </main>
 <footer>Generated from the game's own data. Percentages and levels are exactly what the ROM uses.</footer>

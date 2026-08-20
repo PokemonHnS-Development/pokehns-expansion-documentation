@@ -331,6 +331,17 @@ footer {
   font-size: 13px;
 }
 
+.card-note.big { color: var(--text); font-size: 14.5px; line-height: 1.55; }
+
+.setting-note { margin: 0; font-size: 11.5px; color: var(--text-dim); }
+.setting-note code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  background: var(--surface-2);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
 /* ---------- move name highlight ----------
    Tinted with its own type's colour, from assets/type-colors.css. Alpha rather
    than a fixed colour so it works in both themes and the text stays readable. */
