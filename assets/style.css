@@ -453,14 +453,22 @@ footer {
 .stack .how { color: var(--text-dim); font-size: 12.5px; }
 .stack .where + .how { flex-basis: 100%; padding-left: 12px; }
 
+.ability-lists {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+.ability-lists .block { margin-bottom: 0; }
+
 /* ---------- species lists ----------
    Vertical lists that wrap into columns, so 70 species stay readable rather
    than becoming one very long strip. */
 
 .monlist {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 0 14px;
+  /* Multi-column so entries run top-to-bottom. The column COUNT is set inline
+     per list from the number of species: a width-based rule gives one item per
+     column on short lists, which reads as a horizontal row. */
+  column-gap: 16px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -473,6 +481,8 @@ footer {
   padding: 2px 0;
   font-size: 13px;
   border-bottom: 1px solid var(--border);
+  break-inside: avoid;          /* don't split a row across a column break */
+  -webkit-column-break-inside: avoid;
 }
 
 .monlist img {
@@ -484,7 +494,7 @@ footer {
 }
 
 @media (max-width: 640px) {
-  .monlist { grid-template-columns: repeat(2, 1fr); }
+  .monlist { column-count: 2 !important; }
 }
 
 /* ---------- group headings ---------- */
