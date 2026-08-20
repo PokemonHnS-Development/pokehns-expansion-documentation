@@ -3,6 +3,8 @@
 :root {
   color-scheme: light dark;
 
+  --page-width: 1180px;
+
   --bg: #f6f7f9;
   --surface: #ffffff;
   --surface-2: #f0f2f5;
@@ -102,7 +104,7 @@ a { color: var(--accent); }
   padding: 10px 16px;
 }
 
-.search-wrap { position: relative; max-width: 1180px; margin: 0 auto; }
+.search-wrap { position: relative; max-width: var(--page-width); margin: 0 auto; }
 
 #search {
   width: 100%;
@@ -118,14 +120,17 @@ a { color: var(--accent); }
 
 .result-count {
   margin: 8px auto 0;
-  max-width: 1180px;
+  max-width: var(--page-width);
   font-size: 12.5px;
   color: var(--text-dim);
 }
 
 /* ---------- layout ---------- */
 
-main { max-width: 1180px; margin: 0 auto; padding: 16px 16px 64px; }
+main { max-width: var(--page-width); margin: 0 auto; padding: 16px 16px 64px; }
+
+/* Pages whose entries read better as a tall column than a wide band. */
+body.narrow { --page-width: 720px; }
 
 .empty {
   display: none;
@@ -228,7 +233,7 @@ mark {
 .prose p { margin: 0 0 12px; }
 
 footer {
-  max-width: 1180px;
+  max-width: var(--page-width);
   margin: 0 auto;
   padding: 0 16px 40px;
   color: var(--text-dim);
@@ -258,7 +263,7 @@ footer {
 .card > h2 {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
   margin: 0;
   padding: 11px 14px;
@@ -410,6 +415,22 @@ footer {
   .badges { margin-left: 0; width: 100%; }
 }
 
+/* ---------- sprite in the card header ----------
+   Sitting beside the name keeps it visible on every tab. */
+
+.monpic {
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
+  margin: -6px 2px -6px 0;
+  image-rendering: pixelated;          /* keep the GBA pixels crisp when scaled */
+  image-rendering: crisp-edges;
+}
+
+@media (max-width: 640px) {
+  .monpic { flex-basis: 44px; width: 44px; height: 44px; }
+}
+
 /* ---------- attribute rows ----------
    One attribute per line: label on the left, everything else running
    horizontally to its right. */
@@ -456,8 +477,8 @@ footer {
 
 .movecols {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
 }
 
 .movecol h3 {
@@ -519,7 +540,20 @@ footer {
 .evo-line {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 8px;
+  align-items: center;
+  gap: 3px 8px;
+  padding: 3px 0;
 }
-.evo-line .arrow { color: var(--text-dim); }
+.evo-line .arrow { color: var(--text-dim); flex: 0 0 auto; }
+
+.evopic {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  margin: -6px 0;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.evo-name { font-weight: 550; }
+.evo-line .how { flex-basis: 100%; padding-left: 60px; }
