@@ -351,6 +351,14 @@ footer {
 
 .mon-name { min-width: 0; overflow-wrap: anywhere; }
 
+.caticon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
 .types { display: flex; flex-wrap: wrap; gap: 4px; margin-left: auto; align-items: center; }
 
 @media (max-width: 640px) {
