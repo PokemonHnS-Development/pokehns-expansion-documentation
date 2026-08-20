@@ -298,10 +298,25 @@ footer {
   image-rendering: crisp-edges;
 }
 
+/* The sprite, name and types of one form sit on a single line, with the type
+   plates pushed to the right edge of the card. */
+.formswap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+/* display:flex would otherwise beat the hidden attribute and show every form */
+.formswap[hidden] { display: none; }
+
+.mon-name { min-width: 0; overflow-wrap: anywhere; }
+
 .types { display: flex; flex-wrap: wrap; gap: 4px; margin-left: auto; align-items: center; }
 
 @media (max-width: 640px) {
-  .types { margin-left: 0; }
+  .formswap { gap: 6px; }
+  .typeicon { width: 52px; height: 26px; }
 }
 
 /* ---------- badges ---------- */
