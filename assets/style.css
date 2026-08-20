@@ -196,17 +196,28 @@ body.narrow { --page-width: 720px; }
 
 .method li {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 2px 10px;
-  padding: 4px 0;
+  grid-template-columns: 32px 1fr auto;
+  gap: 0 8px;
+  align-items: center;
+  padding: 3px 0;
   border-bottom: 1px solid var(--border);
 }
+
+.monicon {
+  grid-row: span 2;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+/* keep names aligned when a species has no icon */
+.method li > .mon:first-child { grid-column: 2; }
 .method li:last-child { border-bottom: 0; }
 
 .mon { font-weight: 550; }
 .pct { color: var(--text-dim); font-variant-numeric: tabular-nums; }
 .lv {
-  grid-column: 1 / -1;
+  grid-column: 2 / -1;
   font-size: 12px;
   color: var(--text-dim);
   font-variant-numeric: tabular-nums;
@@ -362,6 +373,16 @@ footer {
   white-space: nowrap;
 }
 .badge.strong { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+
+/* species that exist in the build but aren't part of normal play */
+.badge.randomizer {
+  background: var(--surface-2);
+  border-style: dashed;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 10.5px;
+  letter-spacing: .04em;
+}
 
 /* ---------- stat strip ---------- */
 
