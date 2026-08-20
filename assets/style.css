@@ -43,6 +43,12 @@ body {
 
 a { color: var(--accent); }
 
+/* Cross-page links keep the surrounding text's colour so lists don't turn into
+   a wall of red; the underline only appears on hover. */
+a.xlink { color: inherit; text-decoration: none; }
+a.xlink:hover { text-decoration: underline; text-decoration-thickness: 1px; }
+a.xlink:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-radius: 3px; }
+
 /* ---------- header + nav ---------- */
 
 .site-header {
