@@ -113,13 +113,23 @@ a.xlink:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
   text-transform: uppercase;
 }
 
+/* Horizontal strips only. overflow-y must be stated: when one axis is not
+   "visible" the other computes from "visible" to "auto", so overflow-x alone
+   left these vertically scrollable, and the active item's negative bottom
+   margin gave them just enough vertical range for touch to rubber-band the
+   whole strip out of its box. The bottom padding is what that negative margin
+   bleeds into, so clipping at the padding edge doesn't eat it; the container's
+   own negative margin puts the layout back. overscroll-behavior-x stops a
+   horizontal overscroll from chaining into browser back-navigation. */
 .nav {
   display: flex;
   gap: 3px;
   overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
   scrollbar-width: none;
-  margin: 0 -16px;
-  padding: 0 16px;
+  margin: 0 -16px -3px;
+  padding: 0 16px 3px;
 }
 .nav::-webkit-scrollbar { display: none; }
 
@@ -763,7 +773,8 @@ footer {
   text-shadow: 1px 1px 0 rgba(0, 0, 0, .3);
 }
 .prose tbody tr:nth-child(even) { background: var(--surface-2); }
-.table-scroll { overflow-x: auto; }
+/* Same axis fix. No negative margins inside a table, so nothing to absorb. */
+.table-scroll { overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; }
 
 @media (max-width: 640px) {
   .stats { grid-template-columns: repeat(4, 1fr); }
@@ -950,10 +961,14 @@ footer {
 .tabs {
   display: flex;
   gap: 3px;
-  padding: 5px 8px 0;
+  /* bottom padding absorbs the selected tab's -1px bleed - see .nav */
+  padding: 5px 8px 1px;
+  margin-bottom: -1px;
   background: var(--surface-3);
   border-bottom: 1px solid var(--border);
   overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
   scrollbar-width: none;
 }
 .tabs::-webkit-scrollbar { display: none; }
