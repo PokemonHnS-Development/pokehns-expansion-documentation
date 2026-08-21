@@ -140,6 +140,9 @@ window.addEventListener('load', hnsPageReady);
 
   function label(shown, total, filtered) {
     if (!count) return;
+    // Nothing to count isn't a result of zero - the type chart and the home
+    // page have no searchable entries at all, and "0 types" is noise.
+    if (!total) { count.textContent = ''; return; }
     count.textContent = filtered
       ? shown + ' of ' + total + ' ' + (shown === 1 ? noun : nounPlural) + ' match'
       : total + ' ' + (total === 1 ? noun : nounPlural);
@@ -195,7 +198,9 @@ window.addEventListener('load', hnsPageReady);
       drawn = 0;
       draw(STEP);
       label(matches.length, all.length, w.length > 0);
-      if (empty) empty.classList.toggle('show', matches.length === 0);
+      // Only a filter that ate everything counts as empty. A page with
+      // nothing to filter in the first place is not "no matches".
+      if (empty) empty.classList.toggle('show', all.length > 0 && matches.length === 0);
       rememberQuery(input ? input.value : '');
     }
 
@@ -244,7 +249,7 @@ window.addEventListener('load', hnsPageReady);
       if (ok) shown++;
     });
     label(shown, cards.length, w.length > 0);
-    if (empty) empty.classList.toggle('show', shown === 0);
+    if (empty) empty.classList.toggle('show', cards.length > 0 && shown === 0);
     rememberQuery(input.value);
   }
 
