@@ -706,11 +706,27 @@ footer {
 
 .row-value { flex: 1; min-width: 0; line-height: 1.65; }
 
+/* Base stats: seven items at 12px overflow a phone card, so "Spe" drops to a
+   second row on its own and reads as a rendering fault rather than a line
+   break. Shrunk below 640px until the set fits; wrap stays on as a safety
+   valve. Spacing is in em so it tightens with the type instead of eating the
+   width the smaller font just freed. */
 .statline { display: flex; flex-wrap: wrap; gap: 4px 14px; }
 .statline span { color: var(--text-dim); font-size: 12px; text-transform: uppercase;
                  letter-spacing: .03em; }
 .statline b { font-variant-numeric: tabular-nums; font-weight: 650; margin-left: 4px; }
 .statline .total b { color: var(--accent); }
+
+@media (max-width: 640px) {
+  .statline { gap: 4px .5em; font-size: 10.5px; }
+  .statline span { font-size: inherit; letter-spacing: .02em; }
+  .statline b { margin-left: .25em; }
+}
+
+/* Small phones lose another ~30px of card width. */
+@media (max-width: 380px) {
+  .statline { font-size: 9.5px; }
+}
 
 .row-value .evo-line { padding: 2px 0; }
 
