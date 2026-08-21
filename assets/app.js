@@ -25,6 +25,23 @@
   if (touch) touch.href = 'assets/favicon/' + chosen + '-180.png';
 })();
 
+// The encounters page sticks each route heading below the search toolbar, and
+// the toolbar is itself sticky at top:0 - so the offset has to be the
+// toolbar's real height. That isn't a constant: the result-count line only
+// appears once a search runs, and the bar grows when it wraps on a narrow
+// screen. Measured rather than guessed, and watched for changes.
+(function () {
+  var bar = document.querySelector('.toolbar');
+  if (!bar) return;
+  function sync() {
+    document.documentElement.style.setProperty(
+      '--stick-top', bar.offsetHeight + 'px');
+  }
+  sync();
+  if ('ResizeObserver' in window) new ResizeObserver(sync).observe(bar);
+  else window.addEventListener('resize', sync);
+})();
+
 // Pokedex cards have two independent selections: which tab is open, and which
 // alternate form is being shown. Both are held on the card as data attributes
 // and applied together, so switching form keeps you on the tab you were reading.

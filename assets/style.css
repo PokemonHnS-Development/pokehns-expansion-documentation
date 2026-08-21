@@ -11,6 +11,10 @@
   color-scheme: light dark;
 
   --page-width: 1180px;
+  /* How far down the sticky route headings sit: the search toolbar is itself
+     sticky at top:0, so they have to clear it. app.js measures the toolbar and
+     overwrites this; the value here is only the no-JS fallback. */
+  --stick-top: 72px;
 
   --bg: #c9d2dc;
   --surface: #ffffff;
@@ -281,10 +285,19 @@ body.ready .page-loader { display: none; }
 
 /* ---------- location cards ---------- */
 
-.loc { margin-bottom: 14px; overflow: hidden; }
+/* No overflow:hidden here. It makes .loc the nearest scrollport, and a
+   sticky child then sticks to a box that never scrolls - i.e. does nothing.
+   It was only clipping rounded corners, and the radius is 0. */
+.loc { margin-bottom: 14px; }
 .loc.hidden { display: none; }
 
+/* The route name clings to the top while you scroll a long route, the way the
+   type chart's row heads cling to the left. Below the toolbar's z-index so it
+   tucks under the search bar rather than colliding with it. */
 .loc > h2 {
+  position: sticky;
+  top: var(--stick-top);
+  z-index: 5;
   margin: 0;
   padding: 8px 12px;
   font-size: 15px;
