@@ -148,6 +148,44 @@ body.wide { --page-width: 1360px; }
 }
 .empty.show { display: block; }
 
+/* ---------- loading state ---------- */
+
+/* Sits in the markup above the card payload so it paints while the rest of
+   the page is still downloading - the Pokedex is ~18 MB and used to show
+   nothing but an empty column until it finished. app.js sets body.ready. */
+.page-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 56px 16px;
+  color: var(--text-dim);
+  text-align: center;
+}
+body.ready .page-loader { display: none; }
+
+.page-loader-spin {
+  width: 26px;
+  height: 26px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: page-loader-spin .7s linear infinite;
+}
+
+.page-loader-note {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  opacity: .8;
+}
+
+@keyframes page-loader-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader-spin { animation-duration: 2.4s; }
+}
+
 /* ---------- location cards ---------- */
 
 .loc {

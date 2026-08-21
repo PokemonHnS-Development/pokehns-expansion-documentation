@@ -62,6 +62,14 @@ document.addEventListener('click', function (e) {
   hnsSyncCard(card);
 });
 
+// The spinner is markup, not script, so it appears the moment the header
+// streams in. Clearing it is this file's job - once for real when the list has
+// been drawn, and once on window load in case something above threw first.
+function hnsPageReady() {
+  document.body.classList.add('ready');
+}
+window.addEventListener('load', hnsPageReady);
+
 (function () {
   var input = document.getElementById('search');
   var count = document.getElementById('result-count');
@@ -156,10 +164,14 @@ document.addEventListener('click', function (e) {
       if (seed) input.value = seed;
     }
     refilter();
+    hnsPageReady();
     return;
   }
 
   // ---- plain mode ----------------------------------------------------------
+  // Cards are already in the DOM by the time this runs, so we're done either
+  // way - including on the pages that have no search box at all.
+  hnsPageReady();
   if (!input) return;
   var cards = Array.prototype.slice.call(document.querySelectorAll('[data-search]'));
 
