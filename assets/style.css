@@ -66,10 +66,20 @@ body {
   margin: 0;
   background: var(--bg);
   /* Faint diagonal weave - the tiled-background habit of the era, done as a
-     gradient so it costs no request. */
+     gradient so it costs no request.
+     A bare repeating-linear-gradient is rasterised across the WHOLE element
+     box, and body on the Pokedex is enormous and changes height every time a
+     tab opens. That blew past the browser's gradient tile cap, so the weave
+     was drawn at a coarser scale on tall/narrow pages (hence "zoomed in" on
+     mobile) and re-scaled on every tab switch. Pinning background-size makes
+     it a fixed 4px tile that repeats, so the pattern no longer depends on the
+     document's dimensions at all. */
   background-image:
-    repeating-linear-gradient(45deg,
-      rgba(255, 255, 255, .16) 0 2px, rgba(0, 0, 0, 0) 2px 4px);
+    linear-gradient(45deg,
+      rgba(255, 255, 255, .16) 25%, transparent 25%,
+      transparent 50%, rgba(255, 255, 255, .16) 50%,
+      rgba(255, 255, 255, .16) 75%, transparent 75%);
+  background-size: 4px 4px;
   color: var(--text);
   font: 13px/1.5 Verdana, Geneva, Tahoma, "DejaVu Sans", sans-serif;
   -webkit-text-size-adjust: 100%;
