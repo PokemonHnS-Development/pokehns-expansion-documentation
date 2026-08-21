@@ -42,6 +42,48 @@
   else window.addEventListener('resize', sync);
 })();
 
+// The nav strip scrolls horizontally, and every click loads a fresh document,
+// so its scroll position resets and the tab you just used can end up off
+// screen. Carried across pages in sessionStorage - same reasoning as the
+// mascot above: per browsing session, and gone when the tab closes.
+// Restoring the saved offset isn't quite enough on its own. Landing on a page
+// directly (a bookmark, a shared link, a different window width) can leave the
+// current tab outside the restored view, so the saved position is treated as a
+// starting point and then corrected until the active tab is actually visible.
+(function () {
+  var nav = document.querySelector('.nav');
+  if (!nav) return;
+  var KEY = 'hns-nav-scroll';
+
+  try {
+    var saved = parseInt(sessionStorage.getItem(KEY), 10);
+    if (saved > 0) nav.scrollLeft = saved;
+  } catch (e) { /* private mode - just start at 0 */ }
+
+  var cur = nav.querySelector('[aria-current="page"]');
+  if (cur) {
+    // Rects, not offsetLeft: .nav isn't positioned, so offsetParent is not it.
+    var navBox = nav.getBoundingClientRect();
+    var curBox = cur.getBoundingClientRect();
+    var PAD = 12;
+    if (curBox.left < navBox.left) {
+      nav.scrollLeft -= (navBox.left - curBox.left) + PAD;
+    } else if (curBox.right > navBox.right) {
+      nav.scrollLeft += (curBox.right - navBox.right) + PAD;
+    }
+  }
+
+  // Debounced: momentum scrolling fires this ~60x a second and setItem is
+  // synchronous.
+  var t = null;
+  nav.addEventListener('scroll', function () {
+    clearTimeout(t);
+    t = setTimeout(function () {
+      try { sessionStorage.setItem(KEY, nav.scrollLeft); } catch (e) {}
+    }, 120);
+  }, { passive: true });
+})();
+
 // Pokedex cards have two independent selections: which tab is open, and which
 // alternate form is being shown. Both are held on the card as data attributes
 // and applied together, so switching form keeps you on the tab you were reading.
