@@ -743,16 +743,26 @@ footer {
 .movecols {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
+  /* Row gap is deliberately larger than the column gap: when the grid wraps,
+     a section starts level with the middle of the list beside it, and an even
+     gap left it looking like more of that list. */
+  gap: 20px 12px;
 }
 
+/* A dim uppercase label was lighter than the move names under it, so a wrapped
+   section read as a continuation of the list above rather than a new heading.
+   Banding it makes the break unmissable without adding a line of text. */
 .movecol h3 {
-  margin: 0 0 5px;
-  font-size: 12px;
-  font-weight: 650;
+  margin: 0 0 6px;
+  padding: 4px 8px;
+  background: var(--surface-2);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .03em;
-  color: var(--text-dim);
+  letter-spacing: .04em;
+  color: var(--text);
 }
 
 .movecol ul { margin: 0; padding: 0; list-style: none; font-size: 13px; }
@@ -766,7 +776,7 @@ footer {
 }
 
 @media (max-width: 640px) {
-  .movecols { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .movecols { grid-template-columns: repeat(2, 1fr); gap: 20px 12px; }
 }
 
 /* ---------- form selector ---------- */
