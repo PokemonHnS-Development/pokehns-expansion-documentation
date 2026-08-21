@@ -123,7 +123,7 @@ a.xlink:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
    horizontal overscroll from chaining into browser back-navigation. */
 .nav {
   display: flex;
-  gap: 3px;
+  gap: 2px;
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
@@ -137,7 +137,11 @@ a.xlink:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
    era did its section strip. */
 .nav a {
   flex: 0 0 auto;
-  padding: 5px 11px;
+  /* Tight enough that all 14 labels fit one desktop row - "Credits" was
+     falling off the end. Tracking is dropped rather than the type size:
+     letter-spacing on 14 uppercase labels costs ~40px across the strip and
+     buys nothing at this size. */
+  padding: 5px 8px;
   background: linear-gradient(180deg, var(--surface-2), var(--surface-3));
   border: 1px solid var(--border);
   border-bottom: 0;
@@ -146,7 +150,6 @@ a.xlink:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .03em;
   white-space: nowrap;
 }
 .nav a:hover { background: var(--surface); color: var(--text); }
