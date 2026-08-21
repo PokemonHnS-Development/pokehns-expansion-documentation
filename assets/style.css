@@ -566,7 +566,11 @@ footer {
 .stack li:last-child { border-bottom: 0; }
 .stack .where { font-weight: 550; flex-basis: 100%; }
 .stack .how { color: var(--text-dim); font-size: 12.5px; }
-.stack .where + .how { flex-basis: 100%; padding-left: 12px; }
+/* "~", not "+": a location with several encounters (the Day/Night split is
+   the common one) has one .how per entry, and the adjacent combinator indented
+   only the first - the rest fell back to the flex line's left edge. Each entry
+   is its own fact, so each gets its own row at the same indent. */
+.stack .where ~ .how { flex-basis: 100%; padding-left: 12px; }
 
 .ability-lists {
   display: grid;
