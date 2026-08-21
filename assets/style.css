@@ -321,6 +321,25 @@ body.ready .page-loader { display: none; }
   text-shadow: 1px 1px 0 rgba(0, 0, 0, .35);
 }
 
+/* Day and night read faster as their own colours than as two identical red
+   pills, and both want to be genuinely bright.
+   Brightness is limited by the label text, not by the fill: a real orange is
+   too light to carry white text (2.3:1) but carries near-black at 7.9:1, while
+   a real purple is the opposite - too dark for black (3.5:1), fine for white
+   at 5.3:1. So they get opposite text treatments rather than a compromise
+   colour. Contrast is checked against the darker end of each gradient. */
+.time-label.time-day {
+  border-color: #d97400;
+  background: linear-gradient(180deg, #ffa733 0%, #ff8c00 100%);
+  color: #10151b;
+  text-shadow: none;
+}
+.time-label.time-night {
+  border-color: #7a0fc0;
+  background: linear-gradient(180deg, #a020f0 0%, #8b12d4 100%);
+  color: #fff;
+}
+
 .methods {
   display: grid;
   /* six methods have to fit on one row at the page's full width */
