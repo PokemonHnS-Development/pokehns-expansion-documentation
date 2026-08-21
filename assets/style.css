@@ -311,8 +311,6 @@ body.ready .page-loader { display: none; }
   display: inline-block;
   margin: 0 0 8px;
   padding: 2px 8px;
-  border: 1px solid var(--accent-dark);
-  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-dark) 100%);
   color: #fff;
   font-size: 10px;
   font-weight: 700;
@@ -329,15 +327,22 @@ body.ready .page-loader { display: none; }
    at 5.3:1. So they get opposite text treatments rather than a compromise
    colour. Contrast is checked against the darker end of each gradient. */
 .time-label.time-day {
-  border-color: #d97400;
-  background: linear-gradient(180deg, #ffa733 0%, #ff8c00 100%);
-  color: #10151b;
+  border-bottom: 2px solid #d97400;
+  color: #fff;
   text-shadow: none;
 }
+
+.time-label.time-day + .methods > .method > ul{
+  border-left: 2px solid #d97400;
+}
+
 .time-label.time-night {
-  border-color: #7a0fc0;
-  background: linear-gradient(180deg, #a020f0 0%, #8b12d4 100%);
+  border-bottom: 2px solid #7a0fc0;
   color: #fff;
+}
+
+.time-label.time-night + .methods > .method > ul {
+  border-left: 2px solid #7a0fc0;
 }
 
 .methods {
@@ -350,8 +355,7 @@ body.ready .page-loader { display: none; }
 .method h3 {
   margin: 0 0 6px;
   padding: 3px 7px;
-  background: linear-gradient(180deg, var(--blue) 0%, var(--blue-dark) 100%);
-  border: 1px solid var(--blue-dark);
+  background-color: var(--blue-dark);
   color: #fff;
   font-size: 10px;
   text-wrap: balance;
@@ -368,7 +372,7 @@ body.ready .page-loader { display: none; }
   grid-template-columns: 32px 1fr auto;
   gap: 0 8px;
   align-items: center;
-  padding: 3px 0;
+  padding: 5px;
   border-bottom: 1px solid var(--border-soft);
 }
 /* Zebra striping - the table habit of the era, and genuinely useful on a
@@ -597,17 +601,13 @@ footer {
 
 .badge {
   padding: 1px 7px;
-  border: 1px solid var(--border);
-  border-top-color: var(--bevel-hi);
-  border-left-color: var(--bevel-hi);
-  background: linear-gradient(180deg, var(--surface-2), var(--surface-3));
+  border-bottom: 2px solid var(--border);
   font-size: 10.5px;
   font-weight: 700;
   color: var(--text-dim);
   white-space: nowrap;
 }
 .badge.strong {
-  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-dark) 100%);
   border-color: var(--accent-dark);
   color: #fff;
   text-shadow: 1px 1px 0 rgba(0, 0, 0, .3);
@@ -679,8 +679,7 @@ footer {
 .block h3 {
   margin: 0 0 6px;
   padding: 3px 7px;
-  background: linear-gradient(180deg, var(--blue) 0%, var(--blue-dark) 100%);
-  border: 1px solid var(--blue-dark);
+  background-color: var(--blue-dark);
   color: #fff;
   font-size: 10.5px;
   font-weight: 700;
@@ -823,8 +822,7 @@ footer {
   border: 1px solid var(--border-soft);
 }
 .prose th {
-  background: linear-gradient(180deg, var(--blue) 0%, var(--blue-dark) 100%);
-  border-color: var(--blue-dark);
+  background-color: var(--blue-dark);
   color: #fff;
   font-size: 11px;
   text-transform: uppercase;
@@ -940,8 +938,7 @@ footer {
 .movecol h3 {
   margin: 0 0 6px;
   padding: 3px 7px;
-  background: linear-gradient(180deg, var(--blue) 0%, var(--blue-dark) 100%);
-  border: 1px solid var(--blue-dark);
+  background-color: var(--blue-dark);
   color: #fff;
   font-size: 10.5px;
   font-weight: 700;
