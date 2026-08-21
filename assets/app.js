@@ -4,6 +4,27 @@
 // Big pages (species, learnsets) would need >100k DOM elements if rendered that
 // way, which is painfully slow on a phone, so they ship their cards as strings
 // in a JSON payload and only the ones on screen are built.
+// The tab icon is Ho-Oh or Lugia, picked once per browsing session. Keeping the
+// choice in sessionStorage means it stays put while you move between pages -
+// rerolling on every navigation looks like a glitch rather than a flourish.
+(function () {
+  var MASCOTS = ['ho_oh', 'lugia'];
+  var chosen;
+  try {
+    chosen = sessionStorage.getItem('hns-mascot');
+    if (MASCOTS.indexOf(chosen) === -1) {
+      chosen = MASCOTS[Math.floor(Math.random() * MASCOTS.length)];
+      sessionStorage.setItem('hns-mascot', chosen);
+    }
+  } catch (e) {
+    chosen = MASCOTS[Math.floor(Math.random() * MASCOTS.length)];
+  }
+  var icon = document.querySelector('link[rel="icon"]');
+  if (icon) icon.href = 'assets/favicon/' + chosen + '-32.png';
+  var touch = document.querySelector('link[rel="apple-touch-icon"]');
+  if (touch) touch.href = 'assets/favicon/' + chosen + '-180.png';
+})();
+
 // Pokedex cards have two independent selections: which tab is open, and which
 // alternate form is being shown. Both are held on the card as data attributes
 // and applied together, so switching form keeps you on the tab you were reading.
