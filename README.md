@@ -17,6 +17,8 @@ documenation_generators/gen_*.py     extract game data to CSV
 documenation_generators/build_site.py   turn those CSVs into this site
 ```
 
+## AI Disclosure
+
 AI-assisted PR's are accepted, but all code must be human-reviewed and tested.
 
 ## Local preview
