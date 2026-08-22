@@ -355,6 +355,35 @@ body.ready .page-loader { display: none; }
   font-weight: 700;
 }
 
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 14px;
+  padding: 16px;
+}
+
+.feature-grid.compact {
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+}
+
+@media (max-width: 900px) {
+  .feature-grid { grid-template-columns: 1fr; }
+}
+
+/* Version badge - small pill */
+small.ver {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--text-dim);
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  vertical-align: middle;
+}
+
 .time-block { padding: 10px 12px; }
 .time-block + .time-block { border-top: 1px dashed var(--border-soft); }
 
@@ -604,14 +633,39 @@ mark {
 }
 
 .feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  /* Flex layout: three columns on wider screens, one on narrow devices */
+  display: flex;
+  flex-wrap: wrap;
   gap: 14px;
   padding: 16px;
 }
 
 .feature-grid.compact {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: 12px;
+}
+
+/* Each card takes roughly a third of the available width minus gaps on wide screens. */
+.feature-grid .feature-card {
+  flex: 1 1 calc((100% - 28px) / 3);
+  min-width: 220px;
+}
+
+@media (max-width: 500px) {
+  .feature-grid .feature-card { flex-basis: 100%; }
+}
+
+/* Version badge - small pill */
+small.ver {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--text-dim);
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  vertical-align: middle;
 }
 
 .feature-card {
