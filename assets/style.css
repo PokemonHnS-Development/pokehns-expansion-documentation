@@ -66,6 +66,34 @@
 
 * { box-sizing: border-box; }
 
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.image-preview {
+  display: block;
+  max-width: 100%;
+  text-decoration: none;
+  cursor: zoom-in;
+}
+
+.image-preview:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.image-preview img {
+  width: 100%;
+  height: auto;
+}
+
+.hns-logo {
+  max-width: 360px;
+  margin: 0 auto;
+}
+
 body {
   margin: 0;
   background: var(--bg);
@@ -87,6 +115,25 @@ body {
   color: var(--text);
   font: 13px/1.5 Verdana, Geneva, Tahoma, "DejaVu Sans", sans-serif;
   -webkit-text-size-adjust: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 0.75em;
+  color: var(--text);
+  font-family: "Trebuchet MS", Verdana, sans-serif;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+p, span, li, ul, ol, td, th, label, button, input, textarea, select {
+  color: inherit;
+  font: inherit;
+  margin: 0 0 1em;
+}
+
+p {
+  margin: 0 0 1em;
+  line-height: 1.7;
 }
 
 a { color: var(--blue); text-decoration: underline; }
@@ -210,6 +257,10 @@ a.xlink:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
 /* ---------- layout ---------- */
 
 main { max-width: var(--page-width); margin: 0 auto; padding: 16px 16px 64px; }
+
+#home h2{
+  font-size: 15px;
+}
 
 /* Pages whose entries read better as a tall column than a wide band. */
 body.narrow { --page-width: 720px; }
@@ -457,11 +508,115 @@ mark {
   color: var(--text);
 }
 
+.feature-hero,
+.feature-section,
+.prose {
+  margin: 0 0 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top-color: var(--bevel-hi);
+  border-left-color: var(--bevel-hi);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.feature-hero-header,
+.feature-header,
+.prose-header {
+  background: linear-gradient(180deg, var(--surface-2) 0%, var(--surface-3) 100%);
+  border-bottom: 2px solid var(--accent);
+  box-shadow: inset 0 1px 0 var(--bevel-hi);
+  padding: 12px 18px;
+}
+
+.feature-hero-header h2,
+.prose-header h2,
+.feature-header h2 {
+  margin: 0;
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+}
+
+.feature-section {
+  overflow: hidden;
+}
+
+
+.feature-section img,
+.feature-header img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--surface-2);
+}
+
+.feature-header h2 {
+  padding: 12px 18px;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 14px;
+  padding: 16px;
+}
+
+.feature-grid.compact {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+}
+
+.feature-card {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+  border: 1px solid var(--border-soft);
+}
+
+.feature-card h3 {
+  margin: 0 0 8px;
+  font-family: "Trebuchet MS", Verdana, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-bottom: 2px solid var(--blue-dark);
+  letter-spacing: .02em;
+  padding: 10px 14px;
+}
+
+.feature-card p {
+  padding: 0 14px 10px 14px;
+  margin: 0;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.home-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: 8px 16px;
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+
+.home-links li {
+  margin: 0;
+  padding: 2px 0;
+}
+
 /* ---------- prose pages ---------- */
 
-.prose { padding: 16px; }
-.prose h2 { margin-top: 0; font-family: "Trebuchet MS", Verdana, sans-serif; font-size: 16px; }
-.prose p { margin: 0 0 12px; }
+.prose-body,
+.feature-hero-body {
+  padding: 16px 18px 18px;
+}
+
+.prose-body > p,
+.prose-body > ul {
+  margin-bottom: 12px;
+}
+
+.prose-body > p:last-child,
+.prose-body > ul:last-child {
+  margin-bottom: 0;
+}
 
 footer {
   max-width: var(--page-width);
