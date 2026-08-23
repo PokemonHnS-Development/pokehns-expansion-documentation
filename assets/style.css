@@ -1395,7 +1395,16 @@ footer {
   border-collapse: separate;
   border-spacing: 0;
   font-variant-numeric: tabular-nums;
+  /* Keep the chart at its natural size and let .table-scroll scroll it. A
+     table only grows to max-content if it fits; otherwise it shrinks toward
+     min-content, which crushed the columns instead of overflowing. */
+  width: max-content;
 }
+
+/* The global "img { max-width: 100% }" lets the type plates shrink with the
+   column, which is what made the header squash rather than the table overflow.
+   These are fixed-size sprites - they should never scale. */
+.typechart img { max-width: none; }
 .typechart th, .typechart td {
   border: 0;
   border-right: 1px solid var(--border);
