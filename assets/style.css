@@ -1383,14 +1383,37 @@ footer {
 
 /* ---------- type chart ---------- */
 
-.typechart { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+/* border-collapse must stay "separate" here. WebKit does not support
+   position:sticky on a table cell when borders are collapsed - it paints
+   borders and backgrounds at the table level instead of the cell, so the stuck
+   row-head loses its background and the rest of the chart scrolls straight over
+   it. On Safari that reads as the left column simply not being there.
+   With separate borders each cell owns its own edges, so only one side is drawn
+   per cell and the shared 1px grid is rebuilt from right+bottom edges plus a
+   left edge on the first column and a top edge on the header. */
+.typechart {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
 .typechart th, .typechart td {
-  border: 1px solid var(--border);
+  border: 0;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   text-align: center;
   padding: 0;
 }
+.typechart tr > *:first-child { border-left: 1px solid var(--border); }
+.typechart thead th { border-top: 1px solid var(--border); }
 .typechart th { background: var(--surface-3); padding: 2px; }
-.typechart .rowhead { position: sticky; left: 0; z-index: 1; }
+/* Opaque background is load-bearing: the cells it overlaps must not show
+   through. z-index above the body cells, below the header row. */
+.typechart .rowhead {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--surface-3);
+}
 .typechart td {
   width: 34px;
   height: 30px;
