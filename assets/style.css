@@ -703,6 +703,43 @@ small.ver {
   padding: 2px 0;
 }
 
+/* ---------- walkthrough ---------- */
+
+/* The disclaimer follows you down the page - the walkthrough is ~500 KB of
+   sections and the caveat matters just as much 200 sections in as it does at
+   the top. Sits below the sticky search toolbar using the same measured offset
+   the encounters page uses for its route headings. */
+.wt-note {
+  position: sticky;
+  top: var(--stick-top);
+  z-index: 4;
+  margin: 0 0 14px;
+  padding: 8px 12px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-left: 5px solid var(--accent);
+  color: var(--text);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.wt-section h2 { scroll-margin-top: calc(var(--stick-top) + 60px); }
+.wt-section p { margin: 0 0 10px; }
+.wt-section p:last-child { margin-bottom: 0; }
+
+.wt-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.wt-table th, .wt-table td {
+  border: 1px solid var(--border-soft);
+  padding: 4px 7px;
+  text-align: left;
+  vertical-align: top;
+}
+.wt-table th {
+  background: var(--surface-2);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 /* ---------- prose pages ---------- */
 
 .prose-body,
