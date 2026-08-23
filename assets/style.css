@@ -340,6 +340,12 @@ body.ready .page-loader { display: none; }
    sticky child then sticks to a box that never scrolls - i.e. does nothing.
    It was only clipping rounded corners, and the radius is 0. */
 .loc { margin-bottom: 14px; }
+/* app.js filters by toggling .hidden on whatever carries data-search, and that
+   is not always a card - the FAQ and Completion pages are tables, so their
+   searchable elements are <tr>. Keying off the attribute covers every page;
+   the element-specific rules below are kept as they were. */
+[data-search].hidden { display: none; }
+
 .loc.hidden { display: none; }
 
 /* The route name clings to the top while you scroll a long route, the way the
