@@ -89,6 +89,14 @@ img {
   height: auto;
 }
 
+/* A screenshot inside an old-sheet cell (the Sinjoh plate map). The full
+   image is far wider than any table column, so it is capped here and the
+   .image-preview anchor around it opens the original. */
+.faq-shot {
+  width: 360px;
+  margin: 6px 0 2px;
+}
+
 .hns-logo {
   max-width: 360px;
   margin: 0 auto;
