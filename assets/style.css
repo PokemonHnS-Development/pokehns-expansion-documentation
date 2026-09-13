@@ -182,6 +182,21 @@ a.xlink:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
   text-transform: uppercase;
 }
 
+/* "new update out now" flag beside the version. Yellow so it reads as a
+   call-out against the white-on-dark subtitle. */
+.update-flag {
+  color: #ffd54a;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 213, 74, .55);
+}
+
+.update-flag:hover,
+.update-flag:focus {
+  color: #fff0a8;
+  border-bottom-color: #fff0a8;
+}
+
 /* Horizontal strips only. overflow-y must be stated: when one axis is not
    "visible" the other computes from "visible" to "auto", so overflow-x alone
    left these vertically scrollable, and the active item's negative bottom
@@ -1483,3 +1498,30 @@ footer {
 
 .typerow { display: flex; flex-wrap: wrap; gap: 5px; }
 .block h3 .caticon { vertical-align: -8px; margin-right: 4px; }
+
+/* ---------- pokeblocks ---------- */
+
+/* The 8x8 block tile, recoloured per Pokeblock colour by the generator. */
+.pbicon {
+  width: 20px;
+  height: 20px;
+  vertical-align: -4px;
+  margin-right: 5px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+/* Icon and name on one line: the cell is narrow enough that a baseline-aligned
+   image wraps onto its own row. */
+.pb-block { display: inline-flex; align-items: center; vertical-align: -4px; }
+.pbname { font-weight: 700; }
+.pb-table td:nth-child(4), .pb-table td:nth-child(5) { text-align: right; }
+/* The feeder result is two facts stacked in one cell, so it reads smaller than
+   the row it belongs to rather than competing with it. */
+.pb-feed { font-size: 11px; line-height: 1.5; color: var(--text-dim); }
+.pb-feed b { color: var(--text); font-weight: 600; }
+/* A berry's icon and name inside a table cell. Several can sit in one cell
+   (three partners), so they wrap as chips rather than stacking. */
+.pb-berry { display: inline-flex; align-items: center; gap: 3px; margin-right: 8px; white-space: nowrap; }
+.pb-berry .itemicon { flex: 0 0 20px; width: 20px; height: 20px; margin: 0; }
+.pb-list { margin: 0 0 8px; padding-left: 18px; font-size: 12.5px; line-height: 1.6; }
+.pb-list li { margin-bottom: 3px; }
