@@ -182,19 +182,19 @@ a.xlink:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
   text-transform: uppercase;
 }
 
-/* "new update out now" flag beside the version. Yellow so it reads as a
+/* "new update out now" flag beside the version. Green so it reads as a
    call-out against the white-on-dark subtitle. */
 .update-flag {
-  color: #ffd54a;
+  color: #5ee07a;
   font-weight: 700;
   text-decoration: none;
-  border-bottom: 1px solid rgba(255, 213, 74, .55);
+  border-bottom: 1px solid rgba(94, 224, 122, .55);
 }
 
 .update-flag:hover,
 .update-flag:focus {
-  color: #fff0a8;
-  border-bottom-color: #fff0a8;
+  color: #b8f5c6;
+  border-bottom-color: #b8f5c6;
 }
 
 /* Horizontal strips only. overflow-y must be stated: when one axis is not
