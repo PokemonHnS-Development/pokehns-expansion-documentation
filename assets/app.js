@@ -157,6 +157,62 @@ function hnsPageReady() {
 window.addEventListener('load', hnsPageReady);
 
 (function () {
+  if (!document.body || document.body.dataset.noun !== 'question') return;
+  var table = document.querySelector('.prose table');
+  if (!table) return;
+
+  var headerRow = table.querySelector('thead tr');
+  if (headerRow) {
+    var headerCells = Array.prototype.slice.call(headerRow.children);
+    if (headerCells.length > 1) {
+      headerRow.insertBefore(headerCells[1], headerCells[0]);
+    }
+  }
+
+  var headers = Array.prototype.slice.call(table.querySelectorAll('thead th')).map(function (th) {
+    return th.textContent.trim();
+  });
+
+  table.querySelectorAll('tbody tr').forEach(function (row) {
+    var cells = Array.prototype.slice.call(row.children);
+    if (cells.length > 1) row.insertBefore(cells[1], cells[0]);
+
+    Array.prototype.slice.call(row.children).forEach(function (cell, index) {
+      if (!headers[index]) return;
+      var value = (cell.textContent || '').trim();
+      cell.dataset.label = headers[index];
+      if (!value) cell.hidden = true;
+
+      if (window.matchMedia && window.matchMedia('(max-width: 700px)').matches &&
+          index === cells.length - 1 &&
+          headers[index] === 'Detailed Answer (If Applicable)' &&
+          value) {
+        var details = document.createElement('details');
+        details.className = 'faq-details';
+
+        var summary = document.createElement('summary');
+        summary.textContent = 'Show details';
+        summary.setAttribute('aria-label', 'Detailed Answer (If Applicable)');
+
+        var body = document.createElement('div');
+        body.className = 'faq-detail-body';
+        body.innerHTML = cell.innerHTML;
+
+        details.addEventListener('toggle', function () {
+          summary.textContent = details.open ? 'Hide details' : 'Show details';
+        });
+
+        details.appendChild(summary);
+        details.appendChild(body);
+
+        cell.innerHTML = '';
+        cell.appendChild(details);
+      }
+    });
+  });
+})();
+
+(function () {
   var input = document.getElementById('search');
   var count = document.getElementById('result-count');
   var empty = document.getElementById('empty');

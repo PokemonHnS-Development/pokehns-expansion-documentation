@@ -1,6 +1,6 @@
 # Pokémon Heart & Soul — Documentation
 
-Player documentation for Pokémon Heart & Soul, served with GitHub Pages.
+Official Player Documentation for Pokémon Heart & Soul, served with GitHub Pages.
 
 Every page is generated directly from the game's own data — encounter tables,
 species info, learnsets, evolutions, item placements and trainer parties are
