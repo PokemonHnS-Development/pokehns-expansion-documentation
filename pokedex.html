@@ -14,8 +14,11 @@
 <header class="site-header">
   <h1 class="site-title"><a href="index.html">Pokemon Heart &amp; Soul</a></h1>
   <p class="site-sub">Player documentation &middot; Version 2.0.6 <a class="update-flag" href="https://www.hackdex.app/hack/pokemon-heart-and-soul" target="_blank" rel="noopener">(new update out now)</a></p>
-  <nav class="nav">
+  <div class="nav-wrap">
+    <button class="nav-scroll-btn prev" type="button" aria-label="Scroll navigation left" aria-hidden="true">&#8249;</button>
+    <nav class="nav">
       <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
       <a href="faq.html">FAQ</a>
       <a href="pokedex.html" aria-current="page">Pok&eacute;dex</a>
       <a href="encounters.html">Wild Encounters</a>
@@ -31,7 +34,9 @@
       <a href="completion.html">Completion</a>
       <a href="walkthrough.html">Walkthrough</a>
       <a href="credits.html">Credits</a>
-  </nav>
+    </nav>
+    <button class="nav-scroll-btn next" type="button" aria-label="Scroll navigation right" aria-hidden="true">&#8250;</button>
+  </div>
 </header>
 <div class="toolbar">
   <div class="search-wrap">
@@ -42,6 +47,12 @@
 </div>
 <main>
   <p class="page-intro">Search by name, ability, move, evolution or location. Use <code>type:fire</code> to list a single type. A <em>Learnset (Gen 3)</em> tab appears where the Gen 3 moves option changes what a species learns. Species with alternate forms show them as buttons under the name.</p>
+  <details class="pokedex-tip">
+    <summary>TIP: Most details are already available in-game!</summary>
+    <div class="pokedex-tip-body">
+      <img class="image-preview" src="assets/images/HnS_Pokedex_Demonstration.gif" alt="Pokémon Heart &amp; Soul Pokédex demonstration" loading="lazy" decoding="async">
+    </div>
+  </details>
   <div class="page-loader" role="status">
     <span class="page-loader-spin" aria-hidden="true"></span>
     <span class="page-loader-text">Loading species...<span class="page-loader-note">This page is large - it can take a few seconds on a slow connection.</span></span>

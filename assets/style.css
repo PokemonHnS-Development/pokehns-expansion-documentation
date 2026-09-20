@@ -156,6 +156,7 @@ a.xlink:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
 /* ---------- header + nav ---------- */
 
 .site-header {
+  position: relative;
   background: linear-gradient(180deg, var(--accent) 0%, var(--accent-dark) 100%);
   border-bottom: 3px solid var(--text);
   padding: 12px 16px 0;
@@ -244,6 +245,55 @@ a.xlink:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
   margin-bottom: -3px;
 }
 
+.nav-wrap {
+  position: relative;
+  margin: 0 -16px -3px;
+  padding: 0 16px 3px;
+}
+
+.nav {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.nav-scroll-btn {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-top-color: var(--bevel-hi);
+  border-left-color: var(--bevel-hi);
+  background: rgba(15, 22, 35, 1);
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s ease, visibility 0.18s ease;
+}
+.nav-scroll-btn.prev { left: 6px; }
+.nav-scroll-btn.next { right: 6px; }
+.nav-scroll-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.nav-scroll-btn:hover,
+.nav-scroll-btn:focus-visible {
+  border-color: var(--blue);
+  outline: none;
+}
+
 /* ---------- search ---------- */
 
 .toolbar {
@@ -257,6 +307,83 @@ a.xlink:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
 
 .search-wrap { position: relative; max-width: var(--page-width); margin: 0 auto; }
 
+.category-bar-wrap {
+  position: relative;
+  max-width: var(--page-width);
+  margin: 8px auto 0;
+}
+.category-nav {
+  position: absolute;
+  top: 0;
+  z-index: 3;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-top-color: var(--bevel-hi);
+  border-left-color: var(--bevel-hi);
+  background: rgba(15, 22, 35, 1);
+  color: var(--text);
+  border-radius: 5px;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s ease, visibility 0.18s ease, transform 0.18s ease;
+}
+.category-nav.prev { left: 0; }
+.category-nav.next { right: 0; }
+.category-nav.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.category-nav:hover,
+.category-nav:focus-visible {
+  border-color: var(--blue);
+  color: #fff;
+  outline: none;
+}
+
+.category-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: hidden;
+  padding: 2px 0 0;
+  white-space: nowrap;
+  scrollbar-width: thin;
+}
+.category-bar::-webkit-scrollbar { height: 6px; }
+
+.category-pill {
+  appearance: none;
+  flex: 0 0 auto;
+  padding: 4px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-top-color: var(--bevel-hi);
+  border-left-color: var(--bevel-hi);
+  border-radius: 5px;
+  color: var(--text-dim);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  cursor: pointer;
+}
+.category-pill:hover,
+.category-pill:focus-visible { border-color: var(--blue); outline: none; }
+.category-pill.active {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: #fff;
+}
+
 /* Sunken well - the inset counterpart to every raised control on the page. */
 #search {
   width: 100%;
@@ -267,11 +394,13 @@ a.xlink:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
   background: var(--surface);
   border: 2px inset var(--border-soft);
   border-radius: var(--radius);
+  margin-bottom: 0;
 }
-#search:focus { outline: 2px solid var(--blue); outline-offset: -2px; }
+#search:focus { outline: 2px solid var(--blue); outline-offset: -2px;}
 
 .result-count {
   margin: 6px auto 0;
+  padding-left: 5px;
   max-width: var(--page-width);
   font-size: 11px;
   color: var(--text-dim);
@@ -279,7 +408,7 @@ a.xlink:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
 
 /* ---------- layout ---------- */
 
-main { max-width: var(--page-width); margin: 0 auto; padding: 16px 16px 64px; }
+main { max-width: var(--page-width); margin: 0 auto; padding: 16px 16px 24px; }
 
 #home h2{
   font-size: 15px;
@@ -719,17 +848,51 @@ small.ver {
   line-height: 1.6;
 }
 
+.feature-card ul {
+  margin-top: 1em;
+}
+
 .home-links {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
   gap: 8px 16px;
-  margin: 12px 0 0;
-  padding-left: 20px;
+  margin: 0 0 0;
+  padding-left: 0;
+  text-align: center;
 }
 
-.home-links li {
-  margin: 0;
-  padding: 2px 0;
+.home-links a {
+  display: block;
+  appearance: none;
+  flex: 0 0 auto;
+  padding: 4px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-top-color: var(--bevel-hi);
+  border-left-color: var(--bevel-hi);
+  border-radius: 5px;
+  color: var(--text-dim);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+.home-links a:hover,
+.home-links a:focus-visible { border-color: var(--blue); outline: none; }
+
+.home-links a:hover,
+.home-links a.active {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: #fff;
+  text-decoration: none;
+}
+
+.home-links li::marker {
+content: '';
 }
 
 /* ---------- walkthrough ---------- */
@@ -796,7 +959,7 @@ footer {
 }
 
 @media (max-width: 640px) {
-  main { padding: 12px 10px 56px; }
+  main { padding: 12px 10px 24px; }
   .toolbar { padding: 8px 10px; }
   .site-header { padding: 10px 12px 0; }
   .nav { margin: 0 -12px; padding: 0 12px; }
@@ -1370,6 +1533,7 @@ footer {
   color: var(--text-dim);
   cursor: pointer;
   white-space: nowrap;
+  margin-bottom: 0;
 }
 .tab:hover { background: var(--surface); color: var(--text); }
 .tab[aria-selected="true"] {

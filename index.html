@@ -14,8 +14,11 @@
 <header class="site-header">
   <h1 class="site-title"><a href="index.html">Pokemon Heart &amp; Soul</a></h1>
   <p class="site-sub">Player documentation &middot; Version 2.0.6 <a class="update-flag" href="https://www.hackdex.app/hack/pokemon-heart-and-soul" target="_blank" rel="noopener">(new update out now)</a></p>
-  <nav class="nav">
+  <div class="nav-wrap">
+    <button class="nav-scroll-btn prev" type="button" aria-label="Scroll navigation left" aria-hidden="true">&#8249;</button>
+    <nav class="nav">
       <a href="index.html" aria-current="page">Home</a>
+      <a href="features.html">Features</a>
       <a href="faq.html">FAQ</a>
       <a href="pokedex.html">Pok&eacute;dex</a>
       <a href="encounters.html">Wild Encounters</a>
@@ -31,7 +34,9 @@
       <a href="completion.html">Completion</a>
       <a href="walkthrough.html">Walkthrough</a>
       <a href="credits.html">Credits</a>
-  </nav>
+    </nav>
+    <button class="nav-scroll-btn next" type="button" aria-label="Scroll navigation right" aria-hidden="true">&#8250;</button>
+  </div>
 </header>
 <div class="toolbar">
   <div class="search-wrap">
@@ -40,36 +45,100 @@
   </div>
   <p class="result-count" id="result-count"></p>
 </div>
-<main>
+<main id="home">
 
   <div class="page-loader" role="status">
     <span class="page-loader-spin" aria-hidden="true"></span>
     <span class="page-loader-text">Loading pages...</span>
   </div>
-  <img class="title-art" src="assets/title.png" alt="Pokemon Heart &amp; Soul" width="1200" height="800" decoding="async">
+    <img class="title-art" src="assets/title.png" alt="Pokemon Heart &amp; Soul" decoding="async">
+  <section class="prose">
+    <h3 class="prose-header">Pokémon Heart &amp; Soul Documentation</h3>
+    <div class="prose-body">
+      <p>Welcome to the official Heart &amp; Soul Documentation. This site is designed to help you navigate the game with quick access to routes, encounters, items, trainer teams, moves, abilities, and everything else you need for your run.</p>
+      <p>The majority of information is generated directly from the game, so it matches what is actually done within the ROM.</p>
+      <ul class="home-links">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="pokedex.html">Pokédex</a></li>
+        <li><a href="encounters.html">Wild Encounters</a></li>
+        <li><a href="statics.html">Gifts &amp; Statics</a></li>
+        <li><a href="items.html">Items &amp; TMs</a></li>
+        <li><a href="trainers.html">Trainers</a></li>
+        <li><a href="moves.html">Moves</a></li>
+        <li><a href="abilities.html">Abilities</a></li>
+        <li><a href="breeding.html">Breeding</a></li>
+        <li><a href="pokeblocks.html">Pok&eacute;blocks</a></li>
+        <li><a href="typechart.html">Type Chart</a></li>
+        <li><a href="shinies.html">Shinies</a></li>
+        <li><a href="completion.html">Completion</a></li>
+        <li><a href="walkthrough.html">Walkthrough</a></li>
+        <li><a href="credits.html">Credits</a></li>
+      </ul>
+    </div>
+  </section>
 
-  <div class="prose">
-    <h2>Pok&eacute;mon Heart &amp; Soul documentation</h2>
-    <p>Welcome to the official Heart &amp; Soul Documentation. Please use the tabs at the bottom of the page to navigate between the pages. If there is any information you would like to see added, submit a feedback post in the discord server. INDEX FAQ Wild Encounters Static, Gift, Trade Pokemon In-Game Trades Fossils Odd Egg Game Corner Legendaries Items, TMs, HMs Evolution Hold Misc Berry Fossil Key TM HM Evolutions, Breeding Evolutions Breeding Trainer Teams Rival Rockets Johto Gyms Johto E4 Kanto Gyms Kanto E4 Eusine Red Johto Gym Rematches Species Info Type Chart Learnsets Moves Move Tutors Misc. BP Delete/Relearn Berries Completion Requirements Unique Shinies Gym Leader Rematches Walkthrough Credits</p>
-    <p>Everything here is generated directly from the game, so it matches what the ROM actually does.</p>
-    <ul>
-      <li><a href="faq.html">FAQ</a></li>
-      <li><a href="pokedex.html">Pok&eacute;dex</a></li>
-      <li><a href="encounters.html">Wild Encounters</a></li>
-      <li><a href="statics.html">Gifts &amp; Statics</a></li>
-      <li><a href="items.html">Items &amp; TMs</a></li>
-      <li><a href="trainers.html">Trainers</a></li>
-      <li><a href="moves.html">Moves</a></li>
-      <li><a href="abilities.html">Abilities</a></li>
-      <li><a href="breeding.html">Breeding</a></li>
-      <li><a href="pokeblocks.html">Pok&eacute;blocks</a></li>
-      <li><a href="typechart.html">Type Chart</a></li>
-      <li><a href="shinies.html">Shinies</a></li>
-      <li><a href="completion.html">Completion</a></li>
-      <li><a href="walkthrough.html">Walkthrough</a></li>
-      <li><a href="credits.html">Credits</a></li>
-    </ul>
-  </div>
+  <section class="feature-hero">
+    <h3 class="feature-hero-header">About Heart and Soul</h3>
+    <div class="feature-hero-body">
+      <img class="hns-logo" src="assets/images/HnS_Logo.png" alt="Pokémon Heart &amp; Soul logo" loading="lazy" decoding="async">
+      <p>Pokémon Heart & Soul brings the classic Johto Region and its iconic story to the world of modern Game Boy Advance decompilation based hacking. Built on Modern Emerald and pokeemerald-expansion, this project offers a fresh take on the GSC/HGSS experience, blending key aspects of the Generation 2 and Generation 4 games, while incorporating many modern Quality of Life features, as well as some familiar mechanics from Gen 3 to Gen 9. Not only is Heart & Soul (HnS) a first-of-its-kind, fully completed, playtested, and largely faithful GSC remake / HGSS demake, it's also completely open source, and is intended to be a base for a new generation of Johto rom hacks.</p>
+    </div>
+  </section>
+  <section class="feature-section">
+    <h2 class="feature-header">Revisit the Johto Region!</h2>
+    <a class="image-preview" href="assets/images/HnS_Collage_YourAdventure.png" target="_blank" rel="noopener noreferrer">
+      <img src="assets/images/HnS_Collage_YourAdventure.png" alt="Pokémon Heart &amp; Soul adventure collage" loading="lazy" decoding="async">
+    </a>
+    <div class="feature-grid">
+      <article class="feature-card">
+        <h3>Full region playthrough</h3>
+        <p>Pokémon Heart & Soul brings the classic Johto Region and its iconic story to the world of Generation 3.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="feature-section">
+    <h2 class="feature-header">Features built for players</h2>
+    <a class="image-preview" href="assets/images/HnS_Collage_Features.PNG" target="_blank" rel="noopener noreferrer">
+      <img src="assets/images/HnS_Collage_Features.PNG" alt="Feature showcase for Pokémon Heart &amp; Soul" loading="lazy" decoding="async">
+    </a>
+    <div class="feature-grid">
+      <article class="feature-card">
+        <h3>Extensive Customisation</h3>
+        <p>Detailed and granular Customisation Options from the start of the game including Modes, Features, Randomization, Nuzlocke, Difficulties, and Challenges.</p>
+      </article>
+      <article class="feature-card">
+        <h3>Classic Johto Features reinvented</h3>
+        <p>Kurts Balls, Ruins of Alph, Bug Catching Contest, reworked with modern enhancements and all new Battle Backgrounds.</p>
+      </article>
+      <article class="feature-card">
+        <h3>Modern player comfort</h3>
+        <p>Quality-of-life improvements including not needing to teach HMs, optional infinite TMs, and optional Physical/Special split.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="feature-section">
+    <h2 class="feature-header">Everything you need to track your run</h2>
+    <a class="image-preview" href="assets/images/HnS_Collage_Exploration.PNG" target="_blank" rel="noopener noreferrer">
+      <img src="assets/images/HnS_Collage_Exploration.PNG" alt="Exploration of the Johto region" loading="lazy" decoding="async">
+    </a>
+    <div class="feature-grid compact">
+      <article class="feature-card">
+        <h3>More Pokémon variety</h3>
+        <p>More Johto Pokémon available in Johto and all Pokémon up to Generation 3 available with more available via randomization.</p>
+      </article>
+      <article class="feature-card">
+        <h3>Improved exploration</h3>
+        <p>Day and night changes, overworld Pokémon on routes to show available encounters and in towns for ambiance to make the region feel more alive.</p>
+      </article>
+      <article class="feature-card">
+        <h3>Quick reference</h3>
+        <p>In-game Pokédex showing all Pokémon locations, evolutions, stats, move learnsets and abilities.</p>
+      </article>
+    </div>
+  </section>
   <p class="empty" id="empty">Nothing matches that search.</p>
 </main>
 <footer>Generated from the game's own data. Percentages and levels are exactly what the ROM uses.</footer>
