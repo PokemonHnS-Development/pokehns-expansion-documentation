@@ -321,10 +321,161 @@ window.addEventListener('load', hnsPageReady);
   // Cards are already in the DOM by the time this runs, so we're done either
   // way - including on the pages that have no search box at all.
   hnsPageReady();
-  if (!input) return;
   var cards = Array.prototype.slice.call(document.querySelectorAll('[data-search]'));
   var categoryBar = document.getElementById('category-bar');
   var selectedCategory = 'All';
+
+  if (!input && !categoryBar) return;
+
+  if (!input && categoryBar) {
+    var sectionTargets = Array.prototype.slice.call(document.querySelectorAll('[data-category][data-search]'));
+    var versionBar = document.getElementById('version-bar');
+    var selectedVersion = 'All';
+
+    function syncDynamicCategoryButtons() {
+      if (!categoryBar) return;
+      categoryBar.querySelectorAll('.category-pill').forEach(function (button) {
+        var active = button.dataset.category === selectedCategory;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+    }
+
+    function syncDynamicVersionButtons() {
+      if (!versionBar) return;
+      versionBar.querySelectorAll('.category-pill').forEach(function (button) {
+        var active = button.dataset.category === selectedVersion;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+    }
+
+    function buildDynamicCategoryBar() {
+      if (!categoryBar) return;
+      var categories = [];
+      sectionTargets.forEach(function (target) {
+        var name = target.dataset.category;
+        if (name && categories.indexOf(name) === -1) categories.push(name);
+      });
+
+      if (!categories.length) return;
+      ensureCategoryNavButtonsForBar(categoryBar);
+      categoryBar.innerHTML = '';
+      var allButton = document.createElement('button');
+      allButton.type = 'button';
+      allButton.className = 'category-pill active';
+      allButton.dataset.category = 'All';
+      allButton.textContent = 'All';
+      allButton.setAttribute('aria-pressed', 'true');
+      categoryBar.appendChild(allButton);
+
+      categories.forEach(function (category) {
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'category-pill';
+        button.dataset.category = category;
+        button.textContent = category;
+        button.setAttribute('aria-pressed', 'false');
+        categoryBar.appendChild(button);
+      });
+
+      var hashCategory = decodeURIComponent(window.location.hash.replace(/^#/, ''));
+      if (hashCategory) {
+        var normalizedHash = hashCategory.replace(/[^a-z0-9]/gi, '').toLowerCase();
+        var categoryFromHash = categories.find(function (category) {
+          return category.replace(/\s+/g, '').toLowerCase() === normalizedHash;
+        });
+        if (categoryFromHash) {
+          selectedCategory = categoryFromHash;
+        }
+      }
+
+      categoryBar.addEventListener('click', function (e) {
+        var button = e.target.closest('.category-pill');
+        if (!button) return;
+        selectedCategory = button.dataset.category;
+        syncDynamicCategoryButtons();
+        applyDynamicFilters();
+      }, { passive: true });
+      updateCategoryNavButtonsForBar(categoryBar);
+    }
+
+    function buildDynamicVersionBar() {
+      if (!versionBar) return;
+      var versions = [];
+      document.querySelectorAll('.changelog-card[data-version]').forEach(function (card) {
+        var name = card.dataset.version;
+        if (name && versions.indexOf(name) === -1) versions.push(name);
+      });
+
+      if (!versions.length) {
+        versionBar.parentElement.hidden = true;
+        return;
+      }
+
+      ensureCategoryNavButtonsForBar(versionBar);
+      versionBar.parentElement.hidden = false;
+      versionBar.innerHTML = '';
+      var allButton = document.createElement('button');
+      allButton.type = 'button';
+      allButton.className = 'category-pill active';
+      allButton.dataset.category = 'All';
+      allButton.textContent = 'All';
+      allButton.setAttribute('aria-pressed', 'true');
+      versionBar.appendChild(allButton);
+
+      versions.forEach(function (version) {
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'category-pill';
+        button.dataset.category = version;
+        button.textContent = version;
+        button.setAttribute('aria-pressed', 'false');
+        versionBar.appendChild(button);
+      });
+
+      versionBar.addEventListener('click', function (e) {
+        var button = e.target.closest('.category-pill');
+        if (!button) return;
+        selectedVersion = button.dataset.category;
+        syncDynamicVersionButtons();
+        applyDynamicFilters();
+      }, { passive: true });
+      updateCategoryNavButtonsForBar(versionBar);
+    }
+
+    function applyDynamicFilters() {
+      sectionTargets.forEach(function (target) {
+        var categoryOk = selectedCategory === 'All' || target.dataset.category === selectedCategory;
+        target.hidden = !categoryOk;
+      });
+
+      var changelogCards = Array.prototype.slice.call(document.querySelectorAll('.changelog-card[data-version]'));
+      changelogCards.forEach(function (card) {
+        var versionOk = selectedVersion === 'All' || card.dataset.version === selectedVersion;
+        var visible = selectedCategory === 'Changelog' || selectedCategory === 'All'
+          ? versionOk
+          : true;
+        card.hidden = !visible;
+      });
+
+      if (versionBar) {
+        var versionWrap = versionBar.parentElement;
+        if (versionWrap) {
+          versionWrap.hidden = false;
+        }
+      }
+    }
+
+    buildDynamicCategoryBar();
+    buildDynamicVersionBar();
+    syncDynamicCategoryButtons();
+    syncDynamicVersionButtons();
+    applyDynamicFilters();
+    return;
+  }
+
+  if (!input) return;
 
   function tmHmSortKey(card) {
     var h2 = card.querySelector('h2');
@@ -409,18 +560,18 @@ window.addEventListener('load', hnsPageReady);
     return categories;
   }
 
-  function updateCategoryNavButtons() {
-    if (!categoryBar) return;
-    var wrap = categoryBar.parentElement;
+  function updateCategoryNavButtonsForBar(bar) {
+    if (!bar) return;
+    var wrap = bar.parentElement;
     if (!wrap) return;
     var prev = wrap.querySelector('.category-nav-prev');
     var next = wrap.querySelector('.category-nav-next');
     if (!prev || !next) return;
 
-    var maxScroll = categoryBar.scrollWidth - categoryBar.clientWidth;
-    var overflows = categoryBar.scrollWidth > categoryBar.clientWidth + 1;
-    var atStart = categoryBar.scrollLeft <= 2;
-    var atEnd = categoryBar.scrollLeft >= maxScroll - 2;
+    var maxScroll = bar.scrollWidth - bar.clientWidth;
+    var overflows = bar.scrollWidth > bar.clientWidth + 1;
+    var atStart = bar.scrollLeft <= 2;
+    var atEnd = bar.scrollLeft >= maxScroll - 2;
 
     prev.classList.toggle('visible', overflows && !atStart);
     next.classList.toggle('visible', overflows && !atEnd);
@@ -428,9 +579,13 @@ window.addEventListener('load', hnsPageReady);
     next.setAttribute('aria-hidden', String(!overflows || atEnd));
   }
 
-  function ensureCategoryNavButtons() {
-    if (!categoryBar) return;
-    var wrap = categoryBar.parentElement;
+  function updateCategoryNavButtons() {
+    updateCategoryNavButtonsForBar(categoryBar);
+  }
+
+  function ensureCategoryNavButtonsForBar(bar) {
+    if (!bar) return;
+    var wrap = bar.parentElement;
     if (!wrap || wrap.querySelector('.category-nav')) return;
 
     var prev = document.createElement('button');
@@ -439,7 +594,7 @@ window.addEventListener('load', hnsPageReady);
     prev.setAttribute('aria-label', 'Scroll categories left');
     prev.innerHTML = '&lsaquo;';
     prev.addEventListener('click', function () {
-      categoryBar.scrollBy({ left: -220, behavior: 'smooth' });
+      bar.scrollBy({ left: -220, behavior: 'smooth' });
     });
 
     var next = document.createElement('button');
@@ -448,14 +603,22 @@ window.addEventListener('load', hnsPageReady);
     next.setAttribute('aria-label', 'Scroll categories right');
     next.innerHTML = '&rsaquo;';
     next.addEventListener('click', function () {
-      categoryBar.scrollBy({ left: 220, behavior: 'smooth' });
+      bar.scrollBy({ left: 220, behavior: 'smooth' });
     });
 
-    wrap.insertBefore(prev, categoryBar);
+    wrap.insertBefore(prev, bar);
     wrap.appendChild(next);
 
-    categoryBar.addEventListener('scroll', updateCategoryNavButtons, { passive: true });
-    window.addEventListener('resize', updateCategoryNavButtons);
+    bar.addEventListener('scroll', function () {
+      updateCategoryNavButtonsForBar(bar);
+    }, { passive: true });
+    window.addEventListener('resize', function () {
+      updateCategoryNavButtonsForBar(bar);
+    });
+  }
+
+  function ensureCategoryNavButtons() {
+    ensureCategoryNavButtonsForBar(categoryBar);
   }
 
   function syncCategoryButtons() {

@@ -528,6 +528,10 @@ a.xlink:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
   color: var(--text-dim);
 }
 
+#version-bar {
+  margin: 0 20px;
+}
+
 /* ---------- layout ---------- */
 
 main { max-width: var(--page-width); margin: 0 auto; padding: 16px 16px 24px; }

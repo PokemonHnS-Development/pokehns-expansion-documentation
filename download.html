@@ -57,13 +57,18 @@
     <button class="nav-scroll-btn next" type="button" aria-label="Scroll navigation right" aria-hidden="true">&#8250;</button>
   </div>
 </header>
+<div class="toolbar">
+  <div class="category-bar-wrap">
+    <div class="category-bar" id="category-bar" aria-label="Filter download sections by category"></div>
+  </div>
+</div>
 <main>
   <div class="page-loader" role="status">
     <span class="page-loader-spin" aria-hidden="true"></span>
     <span class="page-loader-text">Loading download info...</span>
   </div>
 
-  <section class="feature-section">
+  <section id="DownloadLinks" class="feature-section" data-category="Download Links" data-search="download links official hackdex github rom patcher pokemon heart soul">
     <h2 class="feature-header">Pokémon Heart & Soul Official Download Links</h2>
     <div class="prose-body">
       <p>Pokémon Heart & Soul is currently on version 2.0.6 and is maintained by the official project team. The project page on Hackdex and the GitHub releases page are the only official places to obtain the patch file.</p>
@@ -90,7 +95,7 @@
     </div>
   </section>
 
-  <section class="feature-section">
+  <section id="RecommendedEmulators" class="feature-section" data-category="Recommended Emulators" data-search="recommended emulators gba emulator mgba pizzaboy lemuroid retroarch delta ignited">
     <h2 class="feature-header">Recommended Emulators</h2>
     <h3 class="feature-subheader">MyBoy, VBA, and gpSP are Not Recommended, and no support can be provided for any issues loading or playing the game.</h3>
     <div class="download-grid compact">
@@ -113,7 +118,7 @@
     </div>
   </section>
 
-  <section class="feature-section">
+  <section id="HowtoPatch" class="feature-section" data-category="How to Patch" data-search="how to patch rom sha 1 hash emerald gba rom patcher js patch file ups">
     <h2 class="feature-header">How to patch</h2>
     <div class="feature-hero-body">
       <div>
@@ -156,10 +161,13 @@
     </div>
   </section>
 
-  <section class="feature-section">
+  <section id="Changelog" class="feature-section" data-category="Changelog" data-search="changelog updates versions release notes v2.0.6 v2.0.5 v2.0.4 v2.0.2 v2.0.1 v2.0.0">
     <h2 class="feature-header">Changelog</h2>
+    <div class="category-bar-wrap">
+      <div class="category-bar" id="version-bar" aria-label="Filter changelog by version"></div>
+    </div>
     <div class="changelog-grid">
-      <article class="feature-card changelog-card">
+      <article class="feature-card changelog-card" data-version="v2.0.6" data-search="v2.0.6 changelog version 2.0.6 latest september 16 2026">
         <div class="changelog-header">
           <h3 class="changelog-version">v2.0.6</h3>
           <p class="changelog-date"><span class="changelog-tag">Latest</span> <em>September 16, 2026</em></p>
@@ -179,7 +187,7 @@
         </ul>
       </article>
 
-      <article class="feature-card changelog-card">
+      <article class="feature-card changelog-card" data-version="v2.0.5" data-search="v2.0.5 changelog version 2.0.5 september 13 2026">
         <div class="changelog-header">
           <h3 class="changelog-version">v2.0.5</h3>
           <p class="changelog-date"><em>September 13, 2026</em></p>
@@ -213,7 +221,7 @@
         </ul>
       </article>
 
-      <article class="feature-card changelog-card">
+      <article class="feature-card changelog-card" data-version="v2.0.4" data-search="v2.0.4 changelog version 2.0.4 august 28 2026">
         <div class="changelog-header">
           <h3 class="changelog-version">v2.0.4</h3>
           <p class="changelog-date"><em>August 28, 2026</em></p>
@@ -246,7 +254,7 @@
         </ul>
       </article>
 
-      <article class="feature-card changelog-card">
+      <article class="feature-card changelog-card" data-version="v2.0.2" data-search="v2.0.2 changelog version 2.0.2 august 23 2026">
         <div class="changelog-header">
           <h3 class="changelog-version">v2.0.2</h3>
           <p class="changelog-date"><em>August 23, 2026</em></p>
@@ -257,7 +265,7 @@
         </ul>
       </article>
 
-      <article class="feature-card changelog-card">
+      <article class="feature-card changelog-card" data-version="v2.0.1" data-search="v2.0.1 changelog version 2.0.1 august 23 2026">
         <div class="changelog-header">
           <h3 class="changelog-version">v2.0.1</h3>
           <p class="changelog-date"><em>August 23, 2026</em></p>
@@ -268,7 +276,7 @@
         </ul>
       </article>
 
-      <article class="feature-card changelog-card">
+      <article class="feature-card changelog-card" data-version="v2.0.0" data-search="v2.0.0 changelog version 2.0.0 august 22 2026">
         <div class="changelog-header">
           <h3 class="changelog-version">v2.0.0</h3>
           <p class="changelog-date"><em>August 22, 2026</em></p>
