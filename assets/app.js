@@ -216,10 +216,15 @@ window.addEventListener('load', hnsPageReady);
   var input = document.getElementById('search');
   var count = document.getElementById('result-count');
   var empty = document.getElementById('empty');
+  var categoryBar = document.getElementById('category-bar');
+  var typeBar = document.getElementById('type-bar');
+  var selectedCategory = 'All';
+  var selectedType = 'All';
   var noun = document.body.dataset.noun || 'result';
   var nounPlural = document.body.dataset.nounPlural || (noun + 's');
   var payload = document.getElementById('cards');
   var timer = null;
+  var movePage = document.body.dataset.noun === 'move' && input && categoryBar && typeBar;
 
   function label(shown, total, filtered) {
     if (!count) return;
@@ -231,12 +236,14 @@ window.addEventListener('load', hnsPageReady);
       : total + ' ' + (total === 1 ? noun : nounPlural);
   }
 
-  function rememberQuery(value, category) {
+  function rememberQuery(value, category, type) {
     var url = new URL(window.location);
     if (value) url.searchParams.set('q', value);
     else url.searchParams.delete('q');
     if (category && category !== 'All') url.searchParams.set('cat', category);
     else url.searchParams.delete('cat');
+    if (type && type !== 'All') url.searchParams.set('type', type);
+    else url.searchParams.delete('type');
     window.history.replaceState(null, '', url);
   }
 
@@ -269,6 +276,95 @@ window.addEventListener('load', hnsPageReady);
       if (sentinel) sentinel.style.display = drawn < matches.length ? '' : 'none';
     }
 
+    function parseMoveTokens(searchText) {
+      var hay = (searchText || '').toLowerCase();
+      var typeMatches = (hay.match(/\btype[a-z]+\b/g) || []).map(function (token) {
+        return token.replace(/^type/, '');
+      });
+      var categoryMatches = (hay.match(/\bcategory[a-z]+\b/g) || []).map(function (token) {
+        return token.replace(/^category/, '');
+      });
+      return { typeMatches: typeMatches, categoryMatches: categoryMatches };
+    }
+
+    function buildWindowedMoveFilterBars() {
+      if (!movePage) return;
+      var typeMatches = [];
+      var categoryMatches = [];
+      all.forEach(function (entry) {
+        var tokenSets = parseMoveTokens(entry[0]);
+        tokenSets.typeMatches.forEach(function (value) {
+          if (value && typeMatches.indexOf(value) === -1) typeMatches.push(value);
+        });
+        tokenSets.categoryMatches.forEach(function (value) {
+          if (value && categoryMatches.indexOf(value) === -1) categoryMatches.push(value);
+        });
+      });
+
+      var typeOrder = ['bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'steel', 'water'];
+      var orderedTypes = typeOrder.filter(function (name) {
+        return typeMatches.indexOf(name) !== -1;
+      });
+      var categoryOrder = ['physical', 'special', 'status'];
+      var orderedCategories = categoryOrder.filter(function (name) {
+        return categoryMatches.indexOf(name) !== -1;
+      });
+
+      function syncMoveButtons() {
+        typeBar.querySelectorAll('.category-pill').forEach(function (button) {
+          var active = button.dataset.type === selectedType;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
+        categoryBar.querySelectorAll('.category-pill').forEach(function (button) {
+          var active = button.dataset.category === selectedCategory;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
+      }
+
+      function buildBar(bar, values, key) {
+        if (!bar) return;
+        ensureCategoryNavButtonsForBar(bar);
+        bar.innerHTML = '';
+        var allButton = document.createElement('button');
+        allButton.type = 'button';
+        allButton.className = 'category-pill active';
+        allButton.dataset[key] = 'All';
+        allButton.textContent = 'All';
+        allButton.setAttribute('aria-pressed', 'true');
+        bar.appendChild(allButton);
+
+        values.forEach(function (value) {
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'category-pill';
+          button.dataset[key] = value;
+          button.textContent = value.charAt(0).toUpperCase() + value.slice(1);
+          button.setAttribute('aria-pressed', 'false');
+          bar.appendChild(button);
+        });
+
+        bar.addEventListener('click', function (e) {
+          var button = e.target.closest('.category-pill');
+          if (!button) return;
+          if (key === 'type') {
+            selectedType = button.dataset.type || 'All';
+          } else {
+            selectedCategory = button.dataset.category || 'All';
+          }
+          syncMoveButtons();
+          refilter();
+        }, { passive: true });
+
+        updateCategoryNavButtonsForBar(bar);
+      }
+
+      buildBar(typeBar, orderedTypes, 'type');
+      buildBar(categoryBar, orderedCategories, 'category');
+      syncMoveButtons();
+    }
+
     function refilter() {
       var w = words();
       matches = w.length
@@ -279,14 +375,26 @@ window.addEventListener('load', hnsPageReady);
             return true;
           })
         : all;
+
+      if (movePage) {
+        matches = matches.filter(function (c) {
+          var hay = (c[0] || '').toLowerCase();
+          var categoryValue = (selectedCategory || 'All').toLowerCase();
+          var typeValue = (selectedType || 'All').toLowerCase();
+          var categoryOk = categoryValue === 'all' || hay.indexOf('category' + categoryValue) !== -1;
+          var typeOk = typeValue === 'all' || hay.indexOf('type' + typeValue) !== -1;
+          return categoryOk && typeOk;
+        });
+      }
+
       list.textContent = '';
       drawn = 0;
       draw(STEP);
-      label(matches.length, all.length, w.length > 0);
+      label(matches.length, all.length, w.length > 0 || movePage && (selectedCategory !== 'All' || selectedType !== 'All'));
       // Only a filter that ate everything counts as empty. A page with
       // nothing to filter in the first place is not "no matches".
       if (empty) empty.classList.toggle('show', all.length > 0 && matches.length === 0);
-      rememberQuery(input ? input.value : '', null);
+      rememberQuery(input ? input.value : '', selectedCategory, selectedType);
     }
 
     if ('IntersectionObserver' in window && sentinel) {
@@ -312,6 +420,7 @@ window.addEventListener('load', hnsPageReady);
       var seed = new URL(window.location).searchParams.get('q');
       if (seed) input.value = seed;
     }
+    buildWindowedMoveFilterBars();
     refilter();
     hnsPageReady();
     return;
@@ -323,9 +432,118 @@ window.addEventListener('load', hnsPageReady);
   hnsPageReady();
   var cards = Array.prototype.slice.call(document.querySelectorAll('[data-search]'));
   var categoryBar = document.getElementById('category-bar');
+  var typeBar = document.getElementById('type-bar');
   var selectedCategory = 'All';
+  var selectedType = 'All';
+  var movePage = document.body.dataset.noun === 'move' && input && categoryBar && typeBar;
+
+  function syncMoveTypeButtons() {
+    if (!typeBar) return;
+    typeBar.querySelectorAll('.category-pill').forEach(function (button) {
+      var active = button.dataset.type === selectedType;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+  }
+
+  function buildMoveFilterBars() {
+    if (!input || !categoryBar || !typeBar) return;
+
+    var typeMatches = [];
+    var categoryMatches = [];
+    cards.forEach(function (card) {
+      var hay = (card.dataset.search || '').toLowerCase();
+      var typeTokenMatches = hay.match(/\btype[a-z]+\b/g) || [];
+      typeTokenMatches.forEach(function (token) {
+        var label = token.replace(/^type/, '');
+        if (label && typeMatches.indexOf(label) === -1) typeMatches.push(label);
+      });
+      var categoryTokenMatches = hay.match(/\bcategory[a-z]+\b/g) || [];
+      categoryTokenMatches.forEach(function (token) {
+        var label = token.replace(/^category/, '');
+        if (label && categoryMatches.indexOf(label) === -1) categoryMatches.push(label);
+      });
+    });
+
+    var typeOrder = ['bug', 'dark', 'dragon', 'electric',  'fairy', 'fighting', 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'steel', 'water'];
+    var orderedTypes = typeOrder.filter(function (name) {
+      return typeMatches.indexOf(name) !== -1;
+    });
+
+    var categoryOrder = ['physical', 'special', 'status'];
+    var orderedCategories = categoryOrder.filter(function (name) {
+      return categoryMatches.indexOf(name) !== -1;
+    });
+
+    function titleCase(value) {
+      return value.charAt(0).toUpperCase() + value.slice(1);
+    }
+
+    function buildBar(bar, values, key) {
+      if (!bar) return;
+      ensureCategoryNavButtonsForBar(bar);
+      bar.innerHTML = '';
+      var allButton = document.createElement('button');
+      allButton.type = 'button';
+      allButton.className = 'category-pill active';
+      allButton.dataset[key] = 'All';
+      allButton.textContent = 'All';
+      allButton.setAttribute('aria-pressed', 'true');
+      bar.appendChild(allButton);
+      values.forEach(function (value) {
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'category-pill';
+        button.dataset[key] = value;
+        button.textContent = titleCase(value);
+        button.setAttribute('aria-pressed', 'false');
+        bar.appendChild(button);
+      });
+      bar.addEventListener('click', function (e) {
+        var button = e.target.closest('.category-pill');
+        if (!button) return;
+        if (key === 'type') {
+          selectedType = button.dataset.type || 'All';
+          syncMoveTypeButtons();
+        } else {
+          selectedCategory = button.dataset.category || 'All';
+          syncCategoryButtons();
+        }
+        apply();
+      }, { passive: true });
+      updateCategoryNavButtonsForBar(bar);
+    }
+
+    buildBar(typeBar, orderedTypes, 'type');
+    buildBar(categoryBar, orderedCategories, 'category');
+
+    var initialType = new URL(window.location).searchParams.get('type');
+    if (initialType) {
+      var normalizedType = initialType.toLowerCase();
+      if (orderedTypes.indexOf(normalizedType) !== -1) {
+        selectedType = normalizedType;
+      }
+    }
+
+    var initialCategory = new URL(window.location).searchParams.get('cat');
+    if (initialCategory) {
+      var normalizedCategory = initialCategory.toLowerCase();
+      if (orderedCategories.indexOf(normalizedCategory) !== -1) {
+        selectedCategory = normalizedCategory;
+      }
+    }
+
+    syncMoveTypeButtons();
+    syncCategoryButtons();
+  }
 
   if (!input && !categoryBar) return;
+
+  if (movePage) {
+    buildMoveFilterBars();
+    apply();
+    return;
+  }
 
   if (!input && categoryBar) {
     var sectionTargets = Array.prototype.slice.call(document.querySelectorAll('[data-category][data-search]'));
@@ -705,10 +923,15 @@ window.addEventListener('load', hnsPageReady);
     var w = words();
     var shown = 0;
     cards.forEach(function (card) {
-      var hay = card.dataset.search;
-      var categoryOk = selectedCategory === 'All'
-        || (card.dataset.categories && card.dataset.categories.split('|').indexOf(selectedCategory) !== -1);
-      var ok = categoryOk && w.every(function (word) { return hay.indexOf(word) !== -1; });
+      var hay = (card.dataset.search || '').toLowerCase();
+      var categoryValue = (selectedCategory || 'All').toLowerCase();
+      var typeValue = (selectedType || 'All').toLowerCase();
+      var categoryOk = categoryValue === 'all'
+        || (document.body.dataset.noun === 'move' && hay.indexOf('category' + categoryValue) !== -1)
+        || (document.body.dataset.noun !== 'move' && card.dataset.categories && card.dataset.categories.split('|').indexOf(selectedCategory) !== -1);
+      var typeOk = typeValue === 'all'
+        || (document.body.dataset.noun === 'move' && hay.indexOf('type' + typeValue) !== -1);
+      var ok = categoryOk && typeOk && w.every(function (word) { return hay.indexOf(word) !== -1; });
       card.classList.toggle('hidden', !ok);
       if (ok) shown++;
     });
@@ -717,7 +940,7 @@ window.addEventListener('load', hnsPageReady);
 
     label(shown, cards.length, w.length > 0);
     if (empty) empty.classList.toggle('show', cards.length > 0 && shown === 0);
-    rememberQuery(input.value, selectedCategory);
+    rememberQuery(input ? input.value : '', selectedCategory, selectedType);
   }
 
   input.addEventListener('input', function () {
@@ -730,6 +953,11 @@ window.addEventListener('load', hnsPageReady);
   var initial = new URL(window.location).searchParams.get('q');
   if (initial) input.value = initial;
   fixTmHmNamesAndOrder();
-  if (categoryBar) buildCategoryBar();
+  if (categoryBar && !movePage) buildCategoryBar();
+  if (movePage) {
+    buildMoveFilterBars();
+    apply();
+    return;
+  }
   apply();
 })();
