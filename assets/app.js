@@ -382,12 +382,24 @@ window.addEventListener('load', hnsPageReady);
   function normalizeCategory(text) {
     if (!text) return text;
     var trimmed = text.trim();
+    trimmed = trimmed.replace(/\s+\((?:shiny|non-shiny)\)$/i, '');
     if (/^(?:TM|HM)\d+$/i.test(trimmed)) return 'TM/HM';
     return trimmed;
   }
 
   function extractCardCategories(card) {
     var categories = [];
+
+    var heading = card.previousElementSibling;
+    while (heading) {
+      if (heading.matches && heading.matches('h2.group-heading')) {
+        var text = heading.textContent.trim();
+        if (text && categories.indexOf(text) === -1) categories.push(text);
+        break;
+      }
+      heading = heading.previousElementSibling;
+    }
+
     card.querySelectorAll('.badge').forEach(function (badge) {
       var text = badge.textContent.trim();
       if (!isCategoryBadge(text)) return;
@@ -455,6 +467,24 @@ window.addEventListener('load', hnsPageReady);
     });
   }
 
+  function hideEmptyGroupHeadings() {
+    document.querySelectorAll('.group-heading').forEach(function (heading) {
+      var next = heading.nextElementSibling;
+      var groupHasVisibleCard = false;
+      while (next && !(next.matches && next.matches('.group-heading'))) {
+        if (next.matches && next.matches('.card') && !next.classList.contains('hidden')) {
+          groupHasVisibleCard = true;
+          break;
+        }
+        next = next.nextElementSibling;
+      }
+
+      var headingCategory = heading.textContent.trim();
+      var categoryMismatch = selectedCategory !== 'All' && headingCategory !== selectedCategory;
+      heading.hidden = categoryMismatch || !groupHasVisibleCard;
+    });
+  }
+
   function buildCategoryBar() {
     if (!categoryBar) return;
     ensureCategoryNavButtons();
@@ -519,6 +549,9 @@ window.addEventListener('load', hnsPageReady);
       card.classList.toggle('hidden', !ok);
       if (ok) shown++;
     });
+
+    hideEmptyGroupHeadings();
+
     label(shown, cards.length, w.length > 0);
     if (empty) empty.classList.toggle('show', cards.length > 0 && shown === 0);
     rememberQuery(input.value, selectedCategory);
