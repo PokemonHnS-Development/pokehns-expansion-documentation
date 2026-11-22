@@ -389,8 +389,8 @@ a.xlink:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
   border: 1px solid var(--border);
   border-top-color: var(--bevel-hi);
   border-left-color: var(--bevel-hi);
-  background: rgba(15, 22, 35, 1);
-  color: #fff;
+  background: var(--surface-2);
+  color: var(--text);
   font-size: 18px;
   line-height: 1;
   cursor: pointer;
@@ -519,7 +519,7 @@ body[data-noun="move"] .result-count {
   border: 1px solid var(--border);
   border-top-color: var(--bevel-hi);
   border-left-color: var(--bevel-hi);
-  background: rgba(15, 22, 35, 1);
+  background: var(--surface-2);
   color: var(--text);
   border-radius: 5px;
   font-size: 18px;
@@ -544,7 +544,7 @@ body[data-noun="move"] .result-count {
 .category-nav:hover,
 .category-nav:focus-visible {
   border-color: var(--blue);
-  color: #fff;
+  color: var(--text);
   outline: none;
 }
 
